@@ -1,8 +1,9 @@
 {
     "require": {
-        "silex/silex": "1.*"
+        "silex/silex": "1.*",
+        "filp/whoops": "1.*"
     },
-	"autoload": {
-        "psr-0": {"chula\\": "src/"}
+    "autoload": {
+        "psr-0": {"": "src/"}
     }
 }

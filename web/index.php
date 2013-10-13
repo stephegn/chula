@@ -1,5 +1,2 @@
 <?php 
-require_once __DIR__.'/../src/bootstrap.php'; 
-
-
-$app->run(); 
+require_once __DIR__.'/../src/app.php'; 
