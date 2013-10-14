@@ -6,8 +6,8 @@ $app->get('/', function() use($app) {
             });
 
 $app->mount(
-'/new',
-new Chula\ControllerProvider\NewPageControllerProvider()
+    '/new',
+    new Chula\ControllerProvider\NewPageControllerProvider()
 );
 
 
