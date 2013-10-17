@@ -1,8 +1,14 @@
 {
     "require": {
-        "silex/silex": "1.*"
+        "silex/silex": "1.*",
+        "filp/whoops": "1.*",
+        "symfony/form": "~2.3",
+        "symfony/twig-bridge": "~2.3",
+        "symfony/validator": "~2.3",
+        "symfony/config": "~2.3",
+        "symfony/translation": "~2.3"
     },
-	"autoload": {
-        "psr-0": {"chula\\": "src/"}
+    "autoload": {
+        "psr-0": {"": "src/"}
     }
 }
