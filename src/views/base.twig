@@ -1,0 +1,30 @@
+{# This template is the main template to be extended by all other pages #}
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Bootstrap -->
+	<link href="{{app.request.baseUrl}}/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	  <script src="../../assets/js/html5shiv.js"></script>
+	  <script src="../../assets/js/respond.min.js"></script>
+	<![endif]-->
+	<title>{% block title %}{% endblock %}</title>
+    {% endblock %}  
+  </head>
+  <body>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+            {% block footer %}
+                &copy; Copyright 2011 by <a href="http://domain.invalid/">you</a>.
+            {% endblock %}
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{app.request.baseUrl}}/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>

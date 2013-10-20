@@ -8,15 +8,10 @@ class NewPageControllerProvider implements ControllerProviderInterface{
 
     public function connect(Application $app) {
             $controllers = $app['controllers_factory'];
-
-            $data = array(
-                      'name' => 'Page Name',
-                      'content' => 'Page Content'
-                    );
                     
-            $form = $app['form.factory']->createBuilder('form', $data)
-                ->add('name')
-                ->add('content')
+            $form = $app['form.factory']->createBuilder('form')
+                ->add('slug')
+                ->add('content', 'textarea')
                 ->getForm();
                             
             $controllers->get('/page', function() use($app, $form) {
