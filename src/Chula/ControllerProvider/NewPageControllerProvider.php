@@ -27,7 +27,7 @@ class NewPageControllerProvider implements ControllerProviderInterface{
                 if ($form->isValid()) {
                     $data = $form->getData();
 
-                    file_put_contents('../content/pages/'.$data['name'], $data['content'], LOCK_EX);
+                    file_put_contents('../content/pages/'.$data['slug'], $data['content'], LOCK_EX);
                     return 'Saved!';
                 }
             });
