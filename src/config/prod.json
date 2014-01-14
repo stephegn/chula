@@ -2,6 +2,7 @@
 {
 	"debug": false,
 	"content_location": "../content/pages/",
-	"admin_path": "admin-kit"
+	"admin_path": "admin-kit",
+	"encrypt": true
 }
 }
