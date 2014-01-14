@@ -1,0 +1,11 @@
+{% extends "base.twig" %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<div id="theContent">
+	<ul>
+		{% for page in pages %}
+			<li>{{page}}</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}

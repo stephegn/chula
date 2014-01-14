@@ -2,14 +2,19 @@
 require_once __DIR__.'/bootstrap.php';
 
 $app->mount(
-	'/{page}', 
-	new Chula\ControllerProvider\Loader()
+		'/'.$app['config']['admin_path'],
+		new Chula\ControllerProvider\Admin()
+	);
+$app->mount(
+		'/{page}', 
+		new Chula\ControllerProvider\Loader()
 	);
 
 $app->mount(
-	'/new',
-	new Chula\ControllerProvider\NewPageControllerProvider()
+		'/'.$app['config']['admin_path'].'/new',
+		new Chula\ControllerProvider\NewPage()
 	);
+
 
 $app->get('/', function() use ($app)
 {

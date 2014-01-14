@@ -1,6 +1,7 @@
 {"config": 
 {
 	"debug": true,
-	"content_location": "../content/pages/"
+	"content_location": "../content/pages/",
+	"admin_path": "admin-kit"
 }
 }
