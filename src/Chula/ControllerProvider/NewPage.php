@@ -27,10 +27,10 @@ class NewPage implements ControllerProviderInterface{
                 if ($form->isValid()) {
                     $data = $form->getData();
 
-                    file_put_contents('../content/pages/'.$data['slug'], $data['content'], LOCK_EX);
-                    return 'Saved!';
+                    file_put_contents($app['config']['content_location'].$data['slug'], $data['content'], LOCK_EX);
+                    return $app->redirect($app['url_generator']->generate('admin'));   
                 }
-            });
+            })->bind('admin_new');
             return $controllers;
 
     }

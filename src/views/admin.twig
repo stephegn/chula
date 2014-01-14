@@ -2,9 +2,10 @@
 {% block title %}Admin{% endblock %}
 {% block content %}
 <div id="theContent">
+	<a class="btn" href="{{url('admin_new')}}">New Page</a>
 	<ul>
 		{% for page in pages %}
-			<li>{{page}}</li>
+			<li>{{page}}<a href="{{url('admin_delete',{page: page})}}">delete</a></li>
 		{% endfor %}
 	</ul>
 </div>

@@ -9,10 +9,17 @@ $app->mount(
 		'/{page}', 
 		new Chula\ControllerProvider\Loader()
 	);
+	
 
 $app->mount(
 		'/'.$app['config']['admin_path'].'/new',
 		new Chula\ControllerProvider\NewPage()
+	);
+	
+
+$app->mount(
+		'/'.$app['config']['admin_path'].'/delete',
+		new Chula\ControllerProvider\DeletePage()
 	);
 
 

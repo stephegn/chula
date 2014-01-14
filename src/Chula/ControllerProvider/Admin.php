@@ -23,7 +23,7 @@ class Admin implements ControllerProviderInterface {
 			
 			return $app['twig']->render('admin.twig', array('pages' => $pages));
 		   
-		});
+		})->bind('admin');
 
 	return $controllers;
     }
