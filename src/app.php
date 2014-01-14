@@ -22,6 +22,11 @@ $app->mount(
 		new Chula\ControllerProvider\DeletePage()
 	);
 
+$app->mount(
+	'/'.$app['config']['admin_path'].'/edit',
+	new Chula\ControllerProvider\EditPage()
+);
+
 
 $app->get('/', function() use ($app)
 {

@@ -5,7 +5,8 @@
 	<a class="btn" href="{{url('admin_new')}}">New Page</a>
 	<ul>
 		{% for page in pages %}
-			<li>{{page}}<a href="{{url('admin_delete',{page: page})}}">delete</a></li>
+			<li>{{page}}<a href="{{url('admin_delete',{page: page})}}">delete</a>
+			<a href="{{url('admin_edit',{page: page})}}">edit</a></li>
 		{% endfor %}
 	</ul>
 </div>
