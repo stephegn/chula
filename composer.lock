@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "25fe91db9b7012f4dcceb28c05a1906b",
+    "hash": "293adca596a04ea94f14758d2c17bcb8",
     "packages": [
         {
             "name": "filp/whoops",
@@ -115,16 +115,16 @@
         },
         {
             "name": "michelf/php-markdown",
-            "version": "dev-lib",
+            "version": "1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelf/php-markdown.git",
-                "reference": "6f952ee180e9bd345f3dd6005aa11e0f5dcbd1b8"
+                "reference": "fcdd3e0781ae40c2b9847874e0755ff4f5559688"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/6f952ee180e9bd345f3dd6005aa11e0f5dcbd1b8",
-                "reference": "6f952ee180e9bd345f3dd6005aa11e0f5dcbd1b8",
+                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/fcdd3e0781ae40c2b9847874e0755ff4f5559688",
+                "reference": "fcdd3e0781ae40c2b9847874e0755ff4f5559688",
                 "shasum": ""
             },
             "require": {
@@ -133,7 +133,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-lib": "1.4.x-dev"
+                    "dev-lib": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -162,7 +162,7 @@
             "keywords": [
                 "markdown"
             ],
-            "time": "2013-11-29 21:49:31"
+            "time": "2013-04-11 18:53:11"
         },
         {
             "name": "pimple/pimple",
