@@ -3,6 +3,7 @@ namespace Chula\ControllerProvider;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Chula\Tools\Encryption;
 
 class NewPage implements ControllerProviderInterface{
 
@@ -27,7 +28,13 @@ class NewPage implements ControllerProviderInterface{
                 if ($form->isValid()) {
                     $data = $form->getData();
 
-                    file_put_contents($app['config']['content_location'].$data['slug'], $data['content'], LOCK_EX);
+                    $content = $data['content'];
+                    if($app['config']['encrypt'])
+                    {
+                        $content = Encryption::encrypt($content);
+                    }
+
+                    file_put_contents($app['config']['content_location'].$data['slug'], $content, LOCK_EX);
                     return $app->redirect($app['url_generator']->generate('admin'));   
                 }
             })->bind('admin_new');
