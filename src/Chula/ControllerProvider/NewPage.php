@@ -1,5 +1,6 @@
 <?php
 namespace Chula\ControllerProvider;
+use Chula\Tools\StringManipulation;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,9 +34,16 @@ class NewPage implements ControllerProviderInterface{
                     {
                         $content = Encryption::encrypt($content);
                     }
+                    $slug = StringManipulation::toSlug($data['slug']);
 
-                    file_put_contents($app['config']['content_location'].$data['slug'], $content, LOCK_EX);
-                    return $app->redirect($app['url_generator']->generate('admin'));   
+                    if(!file_exists($app['config']['content_location'].$slug) ){
+                        file_put_contents($app['config']['content_location'].$slug, $content, LOCK_EX);
+                        return $app->redirect($app['url_generator']->generate('admin'));
+                    } else {
+                        //@todo need a better flash system
+                        return $app['twig']->render('newPageForm.twig', array('form' => $form->createView(), 'messages' => array('That page already exists')));
+
+                    }
                 }
             })->bind('admin_new');
             return $controllers;

@@ -1,6 +1,9 @@
 {% extends "base.twig" %}
 {% block title %}Page{% endblock %}
 {% block content %}
+    {%  for message in messages %}
+        <div class="alert-danger"><p>{{ message }}</p></div>
+    {% endfor %}
 <form action="#" method="post">
     {{ form_widget(form) }}
 

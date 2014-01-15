@@ -1,5 +1,6 @@
 <?php
 namespace Chula\ControllerProvider;
+use Chula\Tools\StringManipulation;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,14 +28,19 @@ class EditPage implements ControllerProviderInterface{
                     return $app['twig']->render('newPageForm.twig', array('form' => $form->createView()));
             })->bind('admin_edit'); 
             
-            $controllers->post('/{page}', function(Request $request) use ($app, $form) {
+            $controllers->post('/{page}', function($page, Request $request) use ($app, $form) {
                 $form->bind($request);
 
                 if ($form->isValid()) {
                     $data = $form->getData();
                     $content = ($app['config']['encrypt']) ? Encryption::encrypt($data['content']) : $data['content'];
 
-                    file_put_contents($app['config']['content_location'].$data['slug'], $content, LOCK_EX);
+                    $slug = StringManipulation::toSlug($data['slug']);
+                    if($slug != $page){
+                        unlink($app['config']['content_location'].$page);
+                    }
+
+                    file_put_contents($app['config']['content_location'].$slug, $content, LOCK_EX);
                     return $app->redirect($app['url_generator']->generate('admin'));   
                 }
             });
