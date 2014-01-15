@@ -1,14 +1,17 @@
 {% extends "base.twig" %}
 {% block title %}Admin{% endblock %}
 {% block content %}
+{%  include "nav.twig" %}
 <div id="theContent">
-    <a href="{{ path('admin-kit_logout') }}">Logout</a>
-	<a class="btn" href="{{url('admin_new')}}">New Page</a>
-	<ul>
+    <h2>Your Pages</h2>
+	<table class="table table-striped">
 		{% for page in pages %}
-			<li>{{page}}<a href="{{url('admin_delete',{page: page})}}">delete</a>
-			<a href="{{url('admin_edit',{page: page})}}">edit</a></li>
+			<tr>
+                <td>{{ page}}</td>
+                <td><a href="{{url('admin_delete',{page: page})}}">Delete</a></td>
+			    <td><a href="{{url('admin_edit',{page: page})}}">Edit</a></td>
+            </tr>
 		{% endfor %}
-	</ul>
+	</table>
 </div>
 {% endblock %}

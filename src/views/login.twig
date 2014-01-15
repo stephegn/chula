@@ -1,6 +1,14 @@
-<form action="{{ path((admin_path) ~ '_login_check') }}" method="post">
+{% extends "base.twig" %}
+{% block css %}
+    <link rel="stylesheet" href="{{ app.request.baseUrl }}/resources/css/login.css">
+{% endblock %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<form class="form-signin" action="{{ path((admin_path) ~ '_login_check') }}" method="post">
+    <h2 class="form-signin-heading">Please sign in</h2>
     {{ error }}
-    <input type="text" name="_username" value="{{ last_username }}" />
-    <input type="password" name="_password" value="" />
-    <input type="submit" />
+    <input class="form-control" type="text" name="_username" placeholder="Username" required value="{{ last_username }}" />
+    <input class="form-control" type="password" placeholder="Password" required  name="_password" value="" />
+    <input class="btn btn-lg btn-primary btn-block" type="submit" />
 </form>
+{% endblock %}

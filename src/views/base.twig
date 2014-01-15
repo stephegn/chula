@@ -2,26 +2,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    {% block head %}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Latest compiled + minified Bootstrap via CDN -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="{{ app.request.baseUrl }}/resources/css/stickyfooter.css">
+      {% block css %}{% endblock %}
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 	<![endif]-->
 	<title>{% block title %}{% endblock %}</title>
-    {% endblock %}  
   </head>
   <body>
-    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="wrap">
+        <div class="container">
+                {% block content %}{% endblock %}
+
+        </div>
+    </div>
     <div id="footer">
+        <div class="container">
             {% block footer %}
                 &copy; Copyright 2014 by <a href="https://github.com/stephcook22/chula/">Chula</a>.
             {% endblock %}
+        </div>
     </div>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
