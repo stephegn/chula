@@ -1,4 +1,6 @@
 {% extends "base.twig" %}
+
+{% form_theme form 'Form/fields.twig' %}
 {% block title %}Page{% endblock %}
 {% block content %}
     {%  for message in messages %}
@@ -6,8 +8,7 @@
     {% endfor %}
 <form action="#" method="post">
     {{ form_widget(form) }}
-
-    <input type="submit" name="submit" />
+    <input class="btn btn-primary" type="submit" name="submit" />
 </form>
 {% endblock %}
 {% block scripts %}
