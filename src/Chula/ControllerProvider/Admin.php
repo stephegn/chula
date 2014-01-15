@@ -14,16 +14,13 @@ class Admin implements ControllerProviderInterface {
 
 	$controllers->get('/', function() use ($app) {
 	
-			//grab all items in our content dir
+			// grab all items in our content dir
 			if(!file_exists($app['config']['content_location']))
 			{
 				$app->abort(500, "Those monkeys couldn't find the page you were after, hard luck.");
 			}
-		    $pages = scandir($app['config']['content_location']);
-			
-			//Remove the first two items in the array. These are always '.' and '..'
-			array_shift($pages);
-			array_shift($pages);
+		    $pages = array_diff(scandir($app['config']['content_location']), array('..', '.'));
+
 			
 			return $app['twig']->render('admin.twig', array('pages' => $pages));
 		   
