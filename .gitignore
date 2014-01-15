@@ -1,6 +1,7 @@
 vendor/
 composer.phar
 .DS_Store
+.idea/
 content/
 chula.sublime-project
 chula.sublime-workspace
