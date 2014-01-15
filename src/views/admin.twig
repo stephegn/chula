@@ -2,6 +2,7 @@
 {% block title %}Admin{% endblock %}
 {% block content %}
 <div id="theContent">
+    <a href="{{ path('admin-kit_logout') }}">Logout</a>
 	<a class="btn" href="{{url('admin_new')}}">New Page</a>
 	<ul>
 		{% for page in pages %}
