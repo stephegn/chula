@@ -2,6 +2,9 @@
 
 namespace Chula\Tools;
 
+/*  Thanks to John Conde (http://stackoverflow.com/users/250259/john-conde) for this class, found it
+    at http://stackoverflow.com/questions/2448256/php-mcrypt-encrypting-decrypting-file
+    */
 class Encryption
 {
     const CYPHER = MCRYPT_RIJNDAEL_256;
