@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__.'/bootstrap.php';
 
+
+use Symfony\Component\HttpFoundation\Request;
+
 $app->mount(
 		'/'.$app['config']['admin_path'],
 		new Chula\ControllerProvider\Admin()
@@ -31,6 +34,13 @@ $app->mount(
 $app->get('/', function() use ($app)
 {
 	return 'HELLOOOOO';
+});
+
+$app->get('/login', function(Request $request) use ($app) {
+    return $app['twig']->render('login.twig', array(
+        'error'         => $app['security.last_error']($request),
+        'last_username' => $app['session']->get('_security.last_username'),
+    ));
 });
 
 $app->run(); 
