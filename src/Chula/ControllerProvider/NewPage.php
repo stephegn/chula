@@ -20,7 +20,7 @@ class NewPage implements ControllerProviderInterface{
                     
                     
                    
-                    return $app['twig']->render('newPageForm.twig', array('form' => $form->createView()));
+                    return $app['twig']->render('admin_edit_page.twig', array('form' => $form->createView()));
             }); 
             
             $controllers->post('/page', function(Request $request) use ($app, $form) {
@@ -41,7 +41,7 @@ class NewPage implements ControllerProviderInterface{
                         return $app->redirect($app['url_generator']->generate('admin'));
                     } else {
                         //@todo need a better flash system
-                        return $app['twig']->render('newPageForm.twig', array('form' => $form->createView(), 'messages' => array('That page already exists')));
+                        return $app['twig']->render('admin_edit_page.twig', array('form' => $form->createView(), 'messages' => array('That page already exists')));
 
                     }
                 }

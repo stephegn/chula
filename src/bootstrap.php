@@ -10,7 +10,7 @@ $app->register(new FormServiceProvider());
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
+    'twig.path' => array( __DIR__.'/views', __DIR__.'/../appearance/chula'),
 ));
 
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
@@ -43,3 +43,18 @@ $app->register(new Silex\Provider\SecurityServiceProvider(array(
         array('^/admin-kit', 'ROLE_ADMIN')
     )
 )));
+
+
+//Twig sandbox policy
+$tags = array('if', 'for');
+$filters = array('upper');
+$methods = array(
+    'Page' => array('getTitle', 'getBody'),
+);
+$properties = array(
+    'Page' => array('title', 'body'),
+);
+$functions = array('range');
+$policy = new Twig_Sandbox_SecurityPolicy($tags, $filters, $methods, $properties, $functions);
+$sandbox = new Twig_Extension_Sandbox($policy);
+$app['twig']->addExtension($sandbox);

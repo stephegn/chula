@@ -22,7 +22,7 @@ class Admin implements ControllerProviderInterface {
 		    $pages = array_diff(scandir($app['config']['content_location']), array('..', '.'));
 
 			
-			return $app['twig']->render('admin.twig', array('pages' => $pages));
+			return $app['twig']->render('admin_home.twig', array('pages' => $pages));
 		   
 		})->bind('admin');
 

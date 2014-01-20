@@ -25,7 +25,7 @@ class EditPage implements ControllerProviderInterface{
 					$form->get('slug')->setData($page);
 					$form->get('content')->setData($file);
                    
-                    return $app['twig']->render('newPageForm.twig', array('form' => $form->createView()));
+                    return $app['twig']->render('admin_edit_page.twig', array('form' => $form->createView()));
             })->bind('admin_edit'); 
             
             $controllers->post('/{page}', function($page, Request $request) use ($app, $form) {

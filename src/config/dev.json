@@ -3,7 +3,7 @@
 	"debug": true,
 	"content_location": "../content/pages/",
 	"admin_path": "admin-kit",
-	"encrypt" : true,
+	"encrypt" : false,
     "users" :
     {
         "admin" :
