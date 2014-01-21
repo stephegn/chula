@@ -47,10 +47,12 @@ $app->register(new Silex\Provider\SecurityServiceProvider(array(
 
 
 //Twig sandbox policy
-$tags = array('if', 'for');
-$filters = array('upper');
+//@todo some of these can be removed with proper methods in place
+$tags = array('if', 'for', 'block');
+$filters = array('upper', 'raw', 'escape');
 $methods = array(
     'Page' => array('getTitle', 'getBody'),
+    'Symfony\Component\HttpFoundation\Request' => array('getbaseurl')
 );
 $properties = array(
     'Page' => array('title', 'body'),

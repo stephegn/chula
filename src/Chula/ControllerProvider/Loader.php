@@ -25,8 +25,8 @@ class Loader implements ControllerProviderInterface {
 		    	}
 
 			$html = Markdown::defaultTransform($content);
-			// TODO: do some fancy stuff that formats this all nicely
-			return $app['twig']->render('page.twig', array('content' => $html));
+
+			return $app['twig']->render('user_page.twig', array('content' => $html));
 		    }
 		    else
 			$app->abort(404, "Those monkeys couldn't find the page you were after, hard luck.");
