@@ -36,7 +36,12 @@ $app->mount(
 
 $app->get('/', function() use ($app)
 {
-	return 'HELLOOOOO';
+    //@todo pull this out into its own controller
+	return $app['twig']->render('user_home.twig',
+        array(
+            'pages' => array_diff(scandir($app['config']['content_location']),
+            array('..', '.')))
+);
 });
 
 $app->get('/login', function(Request $request) use ($app) {
