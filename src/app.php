@@ -37,7 +37,7 @@ $app->mount(
 $app->get('/', function() use ($app)
 {
 	return 'HELLOOOOO';
-});
+})->bind('home');
 
 $app->get('/login', function(Request $request) use ($app) {
     return $app['twig']->render('login.twig', array(
