@@ -5,7 +5,7 @@ namespace Chula\ControllerProvider;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use \Michelf\Markdown;
-use Chula\Tools\FileManager;
+use Chula\Tools\Encryption;
 
 
 class Loader implements ControllerProviderInterface
