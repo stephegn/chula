@@ -19,17 +19,26 @@ class Loader implements ControllerProviderInterface
     $controllers->get('/', function ($page) use ($app)
     {
 
-      $content = FileManager::getPageContent($page, $app['config']);
+      $filepath = $app['config']['content_location'] . $page;
+      if (file_exists($filepath))
+      {
+        $content = file_get_contents($filepath);
 
-      if (is_null($content))
+        if ($app['config']['encrypt'])
+        {
+          // Need to decrypt the content first if we're set to use encryption
+          $content = Encryption::decrypt($content);
+        }
+
+        $html = Markdown::defaultTransform($content);
+
+        // TODO: do some fancy stuff that formats this all nicely
+        return $app['twig']->render('page.twig', array('content' => $html));
+      }
+      else
       {
         $app->abort(404, "Those monkeys couldn't find the page you were after, hard luck.");
       }
-
-      $html = Markdown::defaultTransform($content);
-
-      // TODO: do some fancy stuff that formats this all nicely
-      return $app['twig']->render('page.twig', array('content' => $html));
     });
 
     return $controllers;
