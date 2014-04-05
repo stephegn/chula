@@ -21,8 +21,6 @@ class NewPage implements ControllerProviderInterface
 
     $controllers->get('/page', function () use ($app, $form)
     {
-
-
       return $app['twig']->render('newPageForm.twig', array('form' => $form->createView()));
     });
 
@@ -41,9 +39,16 @@ class NewPage implements ControllerProviderInterface
         }
         $slug = StringManipulation::toSlug($data['slug']);
 
-        if (!file_exists($app['config']['content_location'] . $slug))
+        // Ensure drafts folder has been created
+        if (!file_exists($app['config']['draft_location']))
         {
-          file_put_contents($app['config']['content_location'] . $slug, $content, LOCK_EX);
+          mkdir($app['config']['draft_location']);
+        }
+
+        // Default to a draft.
+        if (!file_exists($app['config']['draft_location'] . $slug))
+        {
+          file_put_contents($app['config']['draft_location'] . $slug, $content, LOCK_EX);
 
           return $app->redirect($app['url_generator']->generate('admin'));
         }
