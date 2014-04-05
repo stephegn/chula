@@ -24,16 +24,17 @@ class Page implements ModelInterface
     /* @var string */
     private $content;
 
-    public function add($data)
-    {
+  public function createFromSerialised($string)
+  {
+    return new this;
+  }
+
+  public function add($data)
+  {
         $this->title = $data['title'];
         $this->$path = $data['path'];
         $this->$content = $data['content'];
         $this->encrypted = $data['encrypted'];
-
-        // Create file
-        $content = ($this->encrypted) ? Encryption::encrypt($this->content) : $this->content;
-        file_put_contents($this->path . $this->title, $content, LOCK_EX);
     }
 
     public function save($data)
@@ -42,10 +43,6 @@ class Page implements ModelInterface
         $this->$path = $data['path'];
         $this->$content = $data['content'];
         $this->encrypted = $data['encrypted'];
-
-        // Update file -- blindly overwrite for now. TODO: Make this better
-        $content = ($this->encrypted) ? Encryption::encrypt($this->content) : $this->content;
-        file_put_contents($this->path . $this->title, $content, LOCK_EX);
     }
 
     public function delete()

@@ -1,52 +1,62 @@
 <?php
 namespace Chula\ControllerProvider;
+
 use Chula\Tools\StringManipulation;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Chula\Tools\Encryption;
 
-class NewPage implements ControllerProviderInterface{
+class NewPage implements ControllerProviderInterface
+{
 
-    public function connect(Application $app) {
-            $controllers = $app['controllers_factory'];
-                    
-            $form = $app['form.factory']->createBuilder('form')
-                ->add('slug')
-                ->add('content', 'textarea')
-                ->getForm();
-                            
-            $controllers->get('/page', function() use($app, $form) {
-                    
-                    
-                   
-                    return $app['twig']->render('newPageForm.twig', array('form' => $form->createView()));
-            }); 
-            
-            $controllers->post('/page', function(Request $request) use ($app, $form) {
-                $form->bind($request);
+  public function connect(Application $app)
+  {
+    $controllers = $app['controllers_factory'];
 
-                if ($form->isValid()) {
-                    $data = $form->getData();
+    $form = $app['form.factory']->createBuilder('form')
+      ->add('slug')
+      ->add('content', 'textarea')
+      ->getForm();
 
-                    $content = $data['content'];
-                    if($app['config']['encrypt'])
-                    {
-                        $content = Encryption::encrypt($content);
-                    }
-                    $slug = StringManipulation::toSlug($data['slug']);
+    $controllers->get('/page', function () use ($app, $form)
+    {
 
-                    if(!file_exists($app['config']['content_location'].$slug) ){
-                        file_put_contents($app['config']['content_location'].$slug, $content, LOCK_EX);
-                        return $app->redirect($app['url_generator']->generate('admin'));
-                    } else {
-                        //@todo need a better flash system
-                        return $app['twig']->render('newPageForm.twig', array('form' => $form->createView(), 'messages' => array('That page already exists')));
 
-                    }
-                }
-            })->bind('admin_new');
-            return $controllers;
+      return $app['twig']->render('newPageForm.twig', array('form' => $form->createView()));
+    });
 
-    }
+    $controllers->post('/page', function (Request $request) use ($app, $form)
+    {
+      $form->bind($request);
+
+      if ($form->isValid())
+      {
+        $data = $form->getData();
+
+        $content = $data['content'];
+        if ($app['config']['encrypt'])
+        {
+          $content = Encryption::encrypt($content);
+        }
+        $slug = StringManipulation::toSlug($data['slug']);
+
+        if (!file_exists($app['config']['content_location'] . $slug))
+        {
+          file_put_contents($app['config']['content_location'] . $slug, $content, LOCK_EX);
+
+          return $app->redirect($app['url_generator']->generate('admin'));
+        }
+        else
+        {
+          //@todo need a better flash system
+          return $app['twig']->render('newPageForm.twig', array('form' => $form->createView(), 'messages' => array('That page already exists')));
+
+        }
+      }
+    })->bind('admin_new');
+
+    return $controllers;
+
+  }
 }
