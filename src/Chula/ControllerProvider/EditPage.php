@@ -6,6 +6,7 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Chula\Tools\Encryption;
+use Symfony\Component\HttpFoundation\Response;
 
 class EditPage implements ControllerProviderInterface
 {
@@ -19,10 +20,12 @@ class EditPage implements ControllerProviderInterface
       ->add('content', 'textarea')
       ->getForm();
 
-    $controllers->get('/{page}', function ($page) use ($app, $form)
-    {
-      $filepath = $app['config']['content_location'] . $page;
-      if (file_exists($filepath))
+      $controllers->get('/{page}/{status}', function ($page, $status) use ($app, $form) {
+          if (!isset($app['config']['location'][$status])) {
+              return new Response('That status does not exist', 404);
+          }
+          $filepath = $app['config']['location'][$status] . $page;
+          if (file_exists($filepath))
       {
         $file = ($app['config']['encrypt']) ? Encryption::decrypt(file_get_contents($filepath)) : file_get_contents($filepath);
       }
@@ -33,9 +36,11 @@ class EditPage implements ControllerProviderInterface
       return $app['twig']->render('newPageForm.twig', array('form' => $form->createView()));
     })->bind('admin_edit');
 
-    $controllers->post('/{page}', function ($page, Request $request) use ($app, $form)
-    {
-      $form->bind($request);
+      $controllers->post('/{page}/{status}', function ($page, $status, Request $request) use ($app, $form) {
+          if (!isset($app['config']['location'][$status])) {
+              return new Response('That status does not exist', 404);
+          }
+          $form->bind($request);
 
       if ($form->isValid())
       {
@@ -45,14 +50,15 @@ class EditPage implements ControllerProviderInterface
         $slug = StringManipulation::toSlug($data['slug']);
         if ($slug != $page)
         {
-          unlink($app['config']['content_location'] . $page);
+            unlink($app['config']['location'][$status] . $page);
         }
 
-        file_put_contents($app['config']['content_location'] . $slug, $content, LOCK_EX);
+          file_put_contents($app['config']['location'][$status] . $slug, $content, LOCK_EX);
 
-        return $app->redirect($app['url_generator']->generate('admin'));
+          return $app->redirect($app['url_generator']->generate('admin'));
       }
-    });
+          return $app['twig']->render('newPageForm.twig', array('form' => $form->createView()));
+      });
 
     return $controllers;
 

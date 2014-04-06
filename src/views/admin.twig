@@ -9,8 +9,8 @@
 		{% for page in pages %}
 			<tr>
                 <td>{{ page }}</td>
-                <td><a href="{{url('admin_delete',{page: page})}}">Delete</a></td>
-			    <td><a href="{{url('admin_edit',{page: page})}}">Edit</a></td>
+                <td><a href="{{ url('admin_delete',{page: page, status:'published'}) }}">Delete</a></td>
+                <td><a href="{{ url('admin_edit',{page: page, status:'published'}) }}">Edit</a></td>
             </tr>
 		{% endfor %}
 	</table>
@@ -25,8 +25,8 @@
             {% for draft in drafts %}
                 <tr>
                     <td>{{ draft }}</td>
-                    <td><a href="{{ url('admin_delete',{page: draft}) }}">Delete</a></td>
-                    <td><a href="{{ url('admin_edit',{page: draft}) }}">Edit</a></td>
+                    <td><a href="{{ url('admin_delete',{page: draft, status:'draft'}) }}">Delete</a></td>
+                    <td><a href="{{ url('admin_edit',{page: draft, status:'draft'}) }}">Edit</a></td>
                     <td><a href="{{ url('admin_publish',{draft: draft}) }}">Publish</a></td>
                 </tr>
             {% endfor %}

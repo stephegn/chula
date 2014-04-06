@@ -1,7 +1,9 @@
 {"config": {
     "debug": true,
-    "content_location": "../content/pages/",
-    "draft_location": "../content/drafts/",
+    "location": {
+        "published": "../content/pages/",
+        "draft": "../content/drafts/"
+    },
     "admin_path": "admin-kit",
     "encrypt": true,
     "users": {
