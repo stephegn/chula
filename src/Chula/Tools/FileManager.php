@@ -13,10 +13,19 @@ class FileManager {
 
   public static function deletePage($page, $config)
   {
-    $path = $config['content_location'] . $page;
-    if (file_exists($path))
+    $path['published'] = $config['content_location'] . $page;
+    $path['draft']     = $config['draft_location'] . $page;
+
+    // Published post
+    if (file_exists($path['published']))
     {
-      unlink($path);
+      unlink($path['published']);
+    }
+
+    // Draft post
+    if (file_exists($path['draft']))
+    {
+      unlink($path['draft']);
     }
   }
 }
