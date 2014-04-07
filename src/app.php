@@ -38,7 +38,7 @@ $app->mount(
   new Chula\ControllerProvider\PublishDraft()
 );
 
-$app->mount('/', new Chula\ControllerProvider\PageList());
+$app->mount('/', new Chula\ControllerProvider\HomePage());
 
 $app->get('/login', function(Request $request) use ($app) {
     return $app['twig']->render('admin_login.twig', array(
