@@ -16,7 +16,7 @@ class Loader implements ControllerProviderInterface {
     $controllers->get('/', function ($page) use ($app)
     {
 
-      $filepath = $app['config']['content_location'] . $page;
+      $filepath = $app['config']['location']['published'] . $page;
       if (file_exists($filepath))
       {
         $content = file_get_contents($filepath);
