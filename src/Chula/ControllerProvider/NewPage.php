@@ -36,10 +36,21 @@ class NewPage implements ControllerProviderInterface{
                     }
                     $slug = StringManipulation::toSlug($data['slug']);
 
-                    if(!file_exists($app['config']['content_location'].$slug) ){
-                        file_put_contents($app['config']['content_location'].$slug, $content, LOCK_EX);
+                    // Ensure drafts folder has been created
+                    if (!file_exists($app['config']['draft_location']))
+                    {
+                        mkdir($app['config']['draft_location']);
+                    }
+
+                    // Default to a draft.
+                    if (!file_exists($app['config']['draft_location'] . $slug))
+                    {
+                        file_put_contents($app['config']['draft_location'] . $slug, $content, LOCK_EX);
+
                         return $app->redirect($app['url_generator']->generate('admin'));
-                    } else {
+                    }
+                    else
+                    {
                         //@todo need a better flash system
                         return $app['twig']->render('admin_edit_page.twig', array('form' => $form->createView(), 'messages' => array('That page already exists')));
 
