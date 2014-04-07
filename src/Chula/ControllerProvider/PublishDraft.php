@@ -21,8 +21,8 @@ class PublishDraft implements ControllerProviderInterface
     {
 
       // Move page from drafts folder to content location
-      $path['draft']     = $app['config']['draft_location'] . $draft;
-      $path['published'] = $app['config']['content_location'] . $draft;
+      $path['draft']     = $app['config']['location']['draft'] . $draft;
+      $path['published'] = $app['config']['location']['published'] . $draft;
       if (file_exists($path['draft']))
       {
         rename($path['draft'], $path['published']);
