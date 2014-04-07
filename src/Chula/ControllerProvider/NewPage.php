@@ -37,15 +37,15 @@ class NewPage implements ControllerProviderInterface{
                     $slug = StringManipulation::toSlug($data['slug']);
 
                     // Ensure drafts folder has been created
-                    if (!file_exists($app['config']['draft_location']))
+                    if (!file_exists($app['config']['location']['draft']))
                     {
-                        mkdir($app['config']['draft_location']);
+                        mkdir($app['config']['location']['draft']);
                     }
 
                     // Default to a draft.
-                    if (!file_exists($app['config']['draft_location'] . $slug))
+                    if (!file_exists($app['config']['location']['draft'] . $slug))
                     {
-                        file_put_contents($app['config']['draft_location'] . $slug, $content, LOCK_EX);
+                        file_put_contents($app['config']['location']['draft'] . $slug, $content, LOCK_EX);
 
                         return $app->redirect($app['url_generator']->generate('admin'));
                     }

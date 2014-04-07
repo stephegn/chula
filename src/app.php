@@ -43,7 +43,7 @@ $app->get('/', function () use ($app)
     //@todo pull this out into its own controller
 	return $app['twig']->render('user_home.twig',
         array(
-            'pages' => array_diff(scandir($app['config']['content_location']),
+            'pages' => array_diff(scandir($app['config']['location']['published']),
             array('..', '.')))
 );
 });

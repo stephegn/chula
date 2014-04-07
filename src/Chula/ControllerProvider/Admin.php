@@ -24,7 +24,7 @@ class Admin implements ControllerProviderInterface {
             $drafts = array_diff(scandir($app['config']['location']['draft']), array('..', '.'));
         }
 
-      return $app['twig']->render('admin.twig', array('pages' => $pages, 'drafts' => $drafts));
+      return $app['twig']->render('admin_home.twig', array('pages' => $pages, 'drafts' => $drafts));
 
     })->bind('admin');
 
