@@ -38,15 +38,7 @@ $app->mount(
   new Chula\ControllerProvider\PublishDraft()
 );
 
-$app->get('/', function () use ($app)
-{
-    //@todo pull this out into its own controller
-	return $app['twig']->render('user_home.twig',
-        array(
-            'pages' => array_diff(scandir($app['config']['location']['published']),
-            array('..', '.')))
-);
-});
+$app->mount('/', new Chula\ControllerProvider\PageList());
 
 $app->get('/login', function(Request $request) use ($app) {
     return $app['twig']->render('admin_login.twig', array(
