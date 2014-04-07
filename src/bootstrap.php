@@ -9,9 +9,7 @@ $app->register(new FormServiceProvider());
 
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => array( __DIR__.'/views', __DIR__.'/../appearance/chula'),
-));
+
 
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'locale_fallbacks' => array('en'),
@@ -24,6 +22,9 @@ $app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__."/config/$env.json"
 if($env != 'prod')
 	$app->register(new Whoops\Provider\Silex\WhoopsServiceProvider);
 
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => array( __DIR__.'/views', __DIR__.'/../appearance/'.$app['config']['theme']),
+));
 $app['twig']->addGlobal('admin_path', $app['config']['admin_path']);
 
 $app->register(new Silex\Provider\SessionServiceProvider());
