@@ -4,9 +4,10 @@ require_once __DIR__.'/bootstrap.php';
 
 use Symfony\Component\HttpFoundation\Request;
 
-foreach ($app['config']['location'] as $path)
-    if (!is_dir($path)) {
-  $app->abort(500, "There was an issue loading the content. Is your content location correct?");
+foreach ($app['config']['location'] as $path) {
+  if (!is_dir($path)) {
+    $app->abort(500, "There was an issue loading the content. Is your content location correct?");
+  }
 }
 
 $app->mount('/', new Chula\ControllerProvider\HomePage());
