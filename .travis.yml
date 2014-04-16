@@ -1,0 +1,32 @@
+# thanks to https://github.com/travis-ci/travis-ci-php-example
+language: php
+
+# list any PHP version you want to test against
+php:
+  # using major version aliases
+
+  # aliased to 5.2.17
+  - 5.2
+  # aliased to a recent 5.3.x version
+  - 5.3
+  # aliased to a recent 5.4.x version
+  - 5.4
+  # aliased to a recent 5.5.x version
+  - 5.5
+
+# whitelist which branches to run on
+branches:
+  only:
+    - master
+
+
+# execute any number of scripts before the test run, custom env's are available as variables
+before_script: composer install
+
+script: php codecept run  # run codeception tests!
+
+# configure notifications (email, IRC, campfire etc)
+notifications:
+  email:
+    - mail@stephcook.co.uk
+    - mail@qasashraf.co.uk
