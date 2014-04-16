@@ -46,7 +46,7 @@ class HomePage implements ControllerProviderInterface {
             return $app['twig']->render('user_home.twig', array('pages' => $pages));
 
 
-        })->bind('admin');
+        })->bind('home');
 
         return $controllers;
     }
