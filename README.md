@@ -41,3 +41,6 @@ To render the page content you MUST use `{{ content | raw}}`
 ####page.twig
 You are currently only passed the content to this page
 To render the page content you MUST use `{{ content | raw}}`
+
+##Tests
+Tests have been setup in the tests/ directory using Codeception.
