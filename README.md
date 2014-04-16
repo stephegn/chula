@@ -2,6 +2,8 @@
 
 Small blogging/website framework.
 
+[![Build Status](https://travis-ci.org/stephcook22/chula.svg?branch=master)](http://travis-ci.org/stephcook22/Chula)
+
 Task list: https://trello.com/b/EcvhEDaC/chula
 
 ##Installation
