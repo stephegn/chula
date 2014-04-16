@@ -5,6 +5,7 @@ language: php
 php:
   # using major version aliases
 
+  - 5.3
   # aliased to a recent 5.4.x version
   - 5.4
   # aliased to a recent 5.5.x version
@@ -21,6 +22,7 @@ before_script:
  - wget http://codeception.com/codecept.phar
  - composer self-update
  - composer install
+ - sudo chmod -R +w tests/
 
 script: php codecept.phar run  # run codeception tests!
 
