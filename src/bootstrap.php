@@ -32,8 +32,12 @@ $app->register(new Silex\Provider\SessionServiceProvider());
 $app['security.firewalls'] = array(
     'admin' => array(
         'pattern' => '^/'.$app['config']['admin_path'],
-        'form' => array('login_path' => '/login',
-        'check_path' => '/'.$app['config']['admin_path'].'/login_check'),
+        'form' => array(
+          'login_path'                     => '/login',
+          'check_path'                     => '/' . $app['config']['admin_path'] . '/login_check',
+          'default_target_path'            => '/' . $app['config']['admin_path'] . '/',
+          "always_use_default_target_path" => TRUE,
+        ),
         'users' => $app['config']['users'],
         'logout' => array('logout_path' => '/'.$app['config']['admin_path'].'/logout')
     ),
