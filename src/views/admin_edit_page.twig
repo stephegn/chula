@@ -17,9 +17,15 @@
     <script src="{{app.request.baseUrl}}/resources/libs/EpicEditor-v0.2.2/js/epiceditor.js"></script>
     <script type="text/javascript">
         var editor = new EpicEditor({
-            basePath: '{{app.request.baseUrl}}/resources/libs/EpicEditor-v0.2.2'
+            basePath: '{{app.request.baseUrl}}/resources/libs/EpicEditor-v0.2.2',
+            theme: {
+                base: '/themes/base/epiceditor.css',
+                preview: '/themes/preview/github.css',
+                editor: '/themes/editor/epic-light.css'
+            },
+            clientSideStorage: false
         });
-        textarea = $('#form_content');
+        textarea = $('#page_content');
 
         // When it loads put the exiting content in there
         editor.on('load', function (file) {
