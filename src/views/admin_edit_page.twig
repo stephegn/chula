@@ -8,10 +8,30 @@
     {% endfor %}
 <form action="#" method="post">
     {{ form_widget(form) }}
+    <div id="epiceditor"></div>
     <input class="btn btn-primary" type="submit" name="submit" />
 </form>
 {% endblock %}
 {% block scripts %}
 
-    <script src="{{app.request.baseUrl}}/resources/libs/hallo.js"></script>
+    <script src="{{app.request.baseUrl}}/resources/libs/EpicEditor-v0.2.2/js/epiceditor.js"></script>
+    <script type="text/javascript">
+        var editor = new EpicEditor({
+            basePath: '{{app.request.baseUrl}}/resources/libs/EpicEditor-v0.2.2'
+        });
+        textarea = $('#form_content');
+
+        // When it loads put the exiting content in there
+        editor.on('load', function (file) {
+            textarea.val(file.content);
+        });
+
+        //Everytime it's updated, update the textarea
+        editor.on('update', function (file) {
+            textarea.val(file.content);
+        });
+
+        // Everything is all setup, so load!
+        editor.load();
+    </script>
 {% endblock %}
