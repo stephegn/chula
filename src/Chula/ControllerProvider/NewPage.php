@@ -10,11 +10,8 @@ class NewPage implements ControllerProviderInterface{
 
     public function connect(Application $app) {
             $controllers = $app['controllers_factory'];
-                    
-            $form = $app['form.factory']->createBuilder('form')
-                ->add('slug')
-                ->add('content', 'textarea')
-                ->getForm();
+
+            $form = $app['form.factory']->create(new PageType());
                             
             $controllers->get('/page', function() use($app, $form) {
                     

@@ -1,5 +1,6 @@
 <?php
 namespace Chula\ControllerProvider;
+use Chula\Form\PageType;
 use Chula\Tools\StringManipulation;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
@@ -13,10 +14,7 @@ class EditPage implements ControllerProviderInterface{
   {
     $controllers = $app['controllers_factory'];
 
-    $form = $app['form.factory']->createBuilder('form')
-      ->add('slug')
-      ->add('content', 'textarea')
-      ->getForm();
+    $form = $app['form.factory']->create(new PageType());
 
       $controllers->get('/{page}/{status}', function ($page, $status) use ($app, $form) {
           if (!isset($app['config']['location'][$status])) {
