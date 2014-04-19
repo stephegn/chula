@@ -1,5 +1,6 @@
 <?php
 namespace Chula\ControllerProvider;
+use Chula\Form\PageType;
 use Chula\Tools\StringManipulation;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
