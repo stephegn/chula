@@ -29,7 +29,7 @@
 
         // When it loads put the exiting content in there
         editor.on('load', function (file) {
-            textarea.val(file.content);
+            editor.getElement('editor').body.innerHTML = textarea.val();
         });
 
         //Everytime it's updated, update the textarea
