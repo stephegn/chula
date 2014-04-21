@@ -11,6 +11,7 @@ namespace Chula\Model;
 
 use Chula\Tools\Encryption;
 use Chula\Tools\StringManipulation;
+use Michelf\Markdown;
 
 /**
  * Class Page
@@ -71,6 +72,12 @@ class Page {
         //@todo should this be here???
         $content = ($this->config['encrypt']) ? Encryption::decrypt($this->content) : $this->content;
         return $content;
+    }
+
+    public function getHtmlContent()
+    {
+        //@todo should this be here?
+        return Markdown::defaultTransform($this->getContent());
     }
 
     /**

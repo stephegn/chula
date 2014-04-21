@@ -18,7 +18,7 @@ $app->mount(
 );
 
 $app->mount(
-  '/{page}',
+  '/{slug}',
   new Chula\ControllerProvider\Loader()
 );
 

@@ -2,43 +2,33 @@
 
 namespace Chula\ControllerProvider;
 
+use Chula\Service\Page as PageService;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use \Michelf\Markdown;
-use Chula\Tools\Encryption;
 
-class Loader implements ControllerProviderInterface {
+class Loader implements ControllerProviderInterface
+{
 
-    public function connect(Application $app) {
-	$controllers = $app['controllers_factory'];
-
-
-    $controllers->get('/', function ($page) use ($app)
+    public function connect(Application $app)
     {
+        $controllers = $app['controllers_factory'];
 
-      $filepath = $app['config']['location']['published'] . $page;
-      if (file_exists($filepath))
-      {
-        $content = file_get_contents($filepath);
 
-        if ($app['config']['encrypt'])
-        {
-          // Need to decrypt the content first if we're set to use encryption
-          $content = Encryption::decrypt($content);
-        }
+        $controllers->get('/', function ($slug) use ($app) {
 
-        $html = Markdown::defaultTransform($content);
+            $pageService = new PageService($app['config']);
+            $page = $pageService->getPageFromSlugAndType($slug, 'published');
 
-        // TODO: do some fancy stuff that formats this all nicely
-        return $app['twig']->render('user_page.twig', array('content' => $html));
-      }
-      else
-      {
-        $app->abort(404, "Those monkeys couldn't find the page you were after, hard luck.");
-      }
-    });
+            if ($page == null) {
+                $app->abort(404, "Those monkeys couldn't find the page you were after, hard luck.");
+            }
 
-    return $controllers;
-  }
+            return $app['twig']->render('user_page.twig', array('content' => $page->getHtmlContent()));
+
+        });
+
+        return $controllers;
+    }
 }
 
