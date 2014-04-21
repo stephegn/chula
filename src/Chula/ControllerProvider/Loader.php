@@ -5,7 +5,6 @@ namespace Chula\ControllerProvider;
 use Chula\Service\Page as PageService;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
-use \Michelf\Markdown;
 
 class Loader implements ControllerProviderInterface
 {
