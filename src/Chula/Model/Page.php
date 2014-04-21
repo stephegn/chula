@@ -60,8 +60,7 @@ class Page {
      */
     public function setContent($content)
     {
-        //@todo should this be here???
-        $this->content = ($this->config['encrypt']) ? Encryption::encrypt($content) : $content;
+        $this->content = $content;
     }
 
     /**

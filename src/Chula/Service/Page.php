@@ -13,35 +13,32 @@ class Page {
 
     private $config;
 
-    public function __construct($config, $storageService)
+    public function __construct($config)
     {
         $this->config = $config;
-        $this->storageService = $storageService;
     }
 
-    public function getDraftPageFromSlug($slug)
+    public function getPageFromSlugAndType($slug, $type)
     {
-        $filePath = $this->config['location']['draft'] . $slug;
+        $filePath = $this->config['location'][$type] . $slug;
         $content = $this->getFileFromPath($filePath);
         if ($content !== null)
         {
-            $page = new PageModel($this->config, $content, $slug, 'draft');
+            $page = new PageModel($this->config, $slug, $content, $type);
             return $page;
         }
 
         return null;
     }
 
-    public function getPublishedPageFromSlug($slug)
+    //@todo this shouldn't be here
+    private function getFileFromPath($filePath)
     {
-        $filePath = $this->config['location']['published'] . $slug;
-        $content = $this->getFileFromPath($filePath);
-        if ($content !== null)
+        if (file_exists($filePath))
         {
-            $page = new PageModel($this->config, $content, $slug, 'draft');
-            return $page;
+            $content = file_get_contents($filePath);
+            return $content;
         }
-
         return null;
     }
 } 

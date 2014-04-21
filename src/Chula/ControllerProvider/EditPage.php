@@ -1,6 +1,8 @@
 <?php
 namespace Chula\ControllerProvider;
+
 use Chula\Form\PageType;
+use Chula\Service\Page as PageService;
 use Chula\Tools\StringManipulation;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
@@ -8,55 +10,52 @@ use Symfony\Component\HttpFoundation\Request;
 use Chula\Tools\Encryption;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditPage implements ControllerProviderInterface{
+class EditPage implements ControllerProviderInterface
+{
 
-  public function connect(Application $app)
-  {
-    $controllers = $app['controllers_factory'];
+    public function connect(Application $app)
+    {
+        $controllers = $app['controllers_factory'];
 
-    $form = $app['form.factory']->create(new PageType());
+        $form = $app['form.factory']->create(new PageType());
 
-      $controllers->get('/{page}/{status}', function ($page, $status) use ($app, $form) {
-          if (!isset($app['config']['location'][$status])) {
-              return new Response('That status does not exist', 404);
-          }
-          $filepath = $app['config']['location'][$status] . $page;
-          if (file_exists($filepath))
-      {
-        $file = ($app['config']['encrypt']) ? Encryption::decrypt(file_get_contents($filepath)) : file_get_contents($filepath);
-      }
+        $controllers->get('/{slug}/{status}', function ($slug, $status) use ($app, $form) {
+            if (!isset($app['config']['location'][$status])) {
+                return new Response('That status does not exist', 404);
+            }
 
-      $form->get('slug')->setData($page);
-      $form->get('content')->setData($file);
+            $pageService = new PageService($app['config']);
+            $page = $pageService->getPageFromSlugAndType($slug, $status);
 
-      return $app['twig']->render('admin_edit_page.twig', array('form' => $form->createView()));
-    })->bind('admin_edit');
+            $form->get('slug')->setData($page->getSlug());
+            $form->get('content')->setData($page->getContent());
 
-      $controllers->post('/{page}/{status}', function ($page, $status, Request $request) use ($app, $form) {
-          if (!isset($app['config']['location'][$status])) {
-              return new Response('That status does not exist', 404);
-          }
-          $form->bind($request);
+            return $app['twig']->render('admin_edit_page.twig', array('form' => $form->createView()));
+        })->bind('admin_edit');
 
-      if ($form->isValid())
-      {
-        $data    = $form->getData();
-        $content = ($app['config']['encrypt']) ? Encryption::encrypt($data['content']) : $data['content'];
+        $controllers->post('/{page}/{status}', function ($page, $status, Request $request) use ($app, $form) {
+            if (!isset($app['config']['location'][$status])) {
+                return new Response('That status does not exist', 404);
+            }
+            $form->bind($request);
 
-        $slug = StringManipulation::toSlug($data['slug']);
-        if ($slug != $page)
-        {
-            unlink($app['config']['location'][$status] . $page);
-        }
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $content = ($app['config']['encrypt']) ? Encryption::encrypt($data['content']) : $data['content'];
 
-          file_put_contents($app['config']['location'][$status] . $slug, $content, LOCK_EX);
+                $slug = StringManipulation::toSlug($data['slug']);
+                if ($slug != $page) {
+                    unlink($app['config']['location'][$status] . $page);
+                }
 
-          return $app->redirect($app['url_generator']->generate('admin'));
-      }
-          return $app['twig']->render('admin_edit_page.twig', array('form' => $form->createView()));
-      });
+                file_put_contents($app['config']['location'][$status] . $slug, $content, LOCK_EX);
 
-    return $controllers;
+                return $app->redirect($app['url_generator']->generate('admin'));
+            }
+            return $app['twig']->render('admin_edit_page.twig', array('form' => $form->createView()));
+        });
 
-  }
+        return $controllers;
+
+    }
 }
