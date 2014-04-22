@@ -10,10 +10,11 @@
     </div>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-            <li><a href="{{url('admin_new')}}">New Page</a></li>
+            <li><a id="new-page" href="{{url('admin_new')}}">New Page</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ path((admin_path) ~ '_logout') }}">Logout</a></li>
+            <li><a id="view-site" href="{{ url('home') }}">View Site</a></li>
+            <li><a id="logout" href="{{ path((admin_path) ~ '_logout') }}">Logout</a></li>
         </ul>
     </div><!--/.nav-collapse -->
 </div>

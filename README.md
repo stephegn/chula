@@ -46,3 +46,7 @@ To render the page content you MUST use `{{ content | raw}}`
 
 ##Tests
 Tests have been setup in the tests/ directory using Codeception.
+###Coverage
+wget https://raw.github.com/Codeception/c3/master/c3.php
+vendor/codeception/codeception/codecept run --coverage --xml --html
+

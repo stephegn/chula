@@ -5,7 +5,7 @@
 <div id="theContent">
     <h2>Your Pages</h2>
     {% if pages %}
-        <table class="table table-striped">
+        <table id="published" class="table table-striped">
 		{% for page in pages %}
 			<tr>
                 <td>{{ page }}</td>
@@ -21,7 +21,7 @@
 
     <h2>Drafts</h2>
     {% if drafts %}
-        <table class="table table-striped">
+        <table id="drafts" class="table table-striped">
             {% for draft in drafts %}
                 <tr>
                     <td>{{ draft }}</td>

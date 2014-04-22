@@ -11,8 +11,3 @@ settings:
     log: true
 modules:
     config:
-        Db:
-            dsn: ''
-            user: ''
-            password: ''
-            dump: tests/_data/dump.sql

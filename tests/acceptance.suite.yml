@@ -12,7 +12,19 @@ class_name: WebGuy
 modules:
     enabled:
         - PhpBrowser
-        - WebHelper
+        - Filesystem
     config:
         PhpBrowser:
             url: 'http://localhost:8000'
+
+coverage:
+    enabled: true
+    remote: true
+    whitelist:
+        include:
+            - src/*
+            - web/*
+    blacklist:
+        include:
+            - vendor/*
+            - tests/*
