@@ -26,8 +26,9 @@ before_script:
  - php -S localhost:8000 -t web/ &
  - sudo chmod -R 777 content
  - php codecept.phar build
+ - wget https://raw.github.com/Codeception/c3/master/c3.php
 
-script: php codecept.phar run  # run codeception tests!
+script: php codecept.phar run --coverage # run codeception tests!
 
 # configure notifications (email, IRC, campfire etc)
 notifications:
