@@ -24,6 +24,8 @@ before_script:
  - mkdir -p tests/_log
  - mkdir -p content/drafts content/pages
  - php -S localhost:8000 -t web/ &
+ - sudo chmod -R 777 content
+ - php codecept.phar build
 
 script: php codecept.phar run  # run codeception tests!
 

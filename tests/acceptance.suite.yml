@@ -13,6 +13,7 @@ modules:
     enabled:
         - PhpBrowser
         - WebHelper
+        - Filesystem
     config:
         PhpBrowser:
-            url: 'http://localhost:8000'
+            url: 'http://localhost/playground/chula/chula/web/'
