@@ -17,7 +17,7 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
 
 $env = getenv('APP_ENV') ?: 'prod';
 
-$app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__."/config/$env.json"));
+$app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__."/../config/$env.json"));
 
 if($env != 'prod')
 	$app->register(new Whoops\Provider\Silex\WhoopsServiceProvider);
