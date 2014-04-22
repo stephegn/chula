@@ -16,4 +16,4 @@ modules:
         - Filesystem
     config:
         PhpBrowser:
-            url: 'http://localhost/playground/chula/chula/web/'
+            url: 'http://localhost:8000'
