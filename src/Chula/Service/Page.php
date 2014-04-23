@@ -8,8 +8,10 @@
 
 namespace Chula\Service;
 
-use \Chula\Model\Page as PageModel;
-class Page {
+use Chula\Model\Page as PageModel;
+
+class Page
+{
 
     private $config;
 
@@ -22,8 +24,7 @@ class Page {
     {
         $filePath = $this->config['location'][$type] . $slug;
         $content = $this->getFileFromPath($filePath);
-        if ($content !== null)
-        {
+        if ($content !== null) {
             $page = new PageModel($this->config, $slug, $content, $type);
             return $page;
         }
@@ -34,8 +35,7 @@ class Page {
     //@todo this shouldn't be here
     private function getFileFromPath($filePath)
     {
-        if (file_exists($filePath))
-        {
+        if (file_exists($filePath)) {
             $content = file_get_contents($filePath);
             return $content;
         }

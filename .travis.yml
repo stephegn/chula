@@ -14,6 +14,7 @@ php:
 branches:
   only:
     - master
+    - Refactor
 
 
 # execute any number of scripts before the test run, custom env's are available as variables

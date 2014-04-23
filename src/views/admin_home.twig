@@ -1,38 +1,39 @@
 {% extends "admin_base.twig" %}
 {% block title %}Admin{% endblock %}
 {% block content %}
-{%  include "admin_nav.twig" %}
-<div id="theContent">
-    <h2>Your Pages</h2>
-    {% if pages %}
-        <table id="published" class="table table-striped">
-		{% for page in pages %}
-			<tr>
-                <td><a href="{{ url('load_page', {slug:page}) }}">{{ page }}</a></td>
-                <td><a href="{{ url('admin_delete',{page: page, status:'published'}) }}">Delete</a></td>
-                <td><a href="{{ url('admin_edit',{slug: page, status:'published'}) }}">Edit</a></td>
-            </tr>
-		{% endfor %}
-	</table>
-    {% else %}
-        No pages have been published yet, either publish one of the drafts below or <a href="{{ url('admin_new') }}">create
-        a new page</a>
-    {% endif %}
+    {% include "admin_nav.twig" %}
+    <div id="theContent">
+        <h2>Your Pages</h2>
+        {% if pages %}
+            <table id="published" class="table table-striped">
+                {% for page in pages %}
+                    <tr>
+                        <td><a href="{{ url('load_page', {slug:page}) }}">{{ page }}</a></td>
+                        <td><a href="{{ url('admin_delete',{page: page, status:'published'}) }}">Delete</a></td>
+                        <td><a href="{{ url('admin_edit',{slug: page, status:'published'}) }}">Edit</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            No pages have been published yet, either publish one of the drafts below or <a
+                href="{{ url('admin_new') }}">create
+            a new page</a>
+        {% endif %}
 
-    <h2>Drafts</h2>
-    {% if drafts %}
-        <table id="drafts" class="table table-striped">
-            {% for draft in drafts %}
-                <tr>
-                    <td>{{ draft }}</td>
-                    <td><a href="{{ url('admin_delete',{page: draft, status:'draft'}) }}">Delete</a></td>
-                    <td><a href="{{ url('admin_edit',{slug: draft, status:'draft'}) }}">Edit</a></td>
-                    <td><a href="{{ url('admin_publish',{draft: draft}) }}">Publish</a></td>
-                </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        No drafts found, why not <a href="{{ url('admin_new') }}">add</a> one?
-    {% endif %}
-</div>
+        <h2>Drafts</h2>
+        {% if drafts %}
+            <table id="drafts" class="table table-striped">
+                {% for draft in drafts %}
+                    <tr>
+                        <td>{{ draft }}</td>
+                        <td><a href="{{ url('admin_delete',{page: draft, status:'draft'}) }}">Delete</a></td>
+                        <td><a href="{{ url('admin_edit',{slug: draft, status:'draft'}) }}">Edit</a></td>
+                        <td><a href="{{ url('admin_publish',{draft: draft}) }}">Publish</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            No drafts found, why not <a href="{{ url('admin_new') }}">add</a> one?
+        {% endif %}
+    </div>
 {% endblock %}

@@ -9,7 +9,8 @@
 namespace Chula\Service;
 
 
-interface StorageInterface {
+interface StorageInterface
+{
 
 
 } 

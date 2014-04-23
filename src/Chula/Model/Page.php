@@ -17,7 +17,8 @@ use Michelf\Markdown;
  * Class Page
  * @package Chula\Model
  */
-class Page {
+class Page
+{
     /**
      * @var
      */
@@ -40,6 +41,7 @@ class Page {
         $this->setContent($content);
         $this->setType($type);
     }
+
     /**
      * @param mixed $type
      */
