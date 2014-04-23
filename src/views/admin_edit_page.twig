@@ -3,18 +3,18 @@
 {% form_theme form 'Form/fields.twig' %}
 {% block title %}Page{% endblock %}
 {% block content %}
-    {%  for message in messages %}
+    {% for message in messages %}
         <div class="alert-danger"><p>{{ message }}</p></div>
     {% endfor %}
-<form action="#" method="post">
-    {{ form_widget(form) }}
-    <div id="epiceditor"></div>
-    <input class="btn btn-primary" type="submit" name="submit" />
-</form>
+    <form action="#" method="post">
+        {{ form_widget(form) }}
+        <div id="epiceditor"></div>
+        <input class="btn btn-primary" type="submit" name="submit"/>
+    </form>
 {% endblock %}
 {% block scripts %}
 
-    <script src="{{app.request.baseUrl}}/resources/libs/EpicEditor-v0.2.2/js/epiceditor.js"></script>
+    <script src="{{ app.request.baseUrl }}/resources/libs/EpicEditor-v0.2.2/js/epiceditor.js"></script>
     <script type="text/javascript">
         var editor = new EpicEditor({
             basePath: '{{app.request.baseUrl}}/resources/libs/EpicEditor-v0.2.2',

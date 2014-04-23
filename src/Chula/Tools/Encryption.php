@@ -18,7 +18,7 @@ class Encryption
         mcrypt_generic_init($td, self::KEY, $iv);
         $crypttext = mcrypt_generic($td, $plaintext);
         mcrypt_generic_deinit($td);
-        return base64_encode($iv.$crypttext);
+        return base64_encode($iv . $crypttext);
     }
 
     public static function decrypt($crypttext)
@@ -29,8 +29,7 @@ class Encryption
         $ivsize    = mcrypt_enc_get_iv_size($td);
         $iv        = substr($crypttext, 0, $ivsize);
         $crypttext = substr($crypttext, $ivsize);
-        if ($iv)
-        {
+        if ($iv) {
             mcrypt_generic_init($td, self::KEY, $iv);
             $plaintext = mdecrypt_generic($td, $crypttext);
         }

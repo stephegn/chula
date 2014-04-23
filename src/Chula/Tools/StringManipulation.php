@@ -9,9 +9,11 @@
 namespace Chula\Tools;
 
 
-class StringManipulation {
+class StringManipulation
+{
 
-    public static function toSlug($string,$space="-") {
+    public static function toSlug($string, $space = "-")
+    {
         if (function_exists('iconv')) {
             $string = @iconv('UTF-8', 'ASCII//TRANSLIT', $string);
         }
