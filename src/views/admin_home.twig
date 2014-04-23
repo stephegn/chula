@@ -8,9 +8,9 @@
         <table id="published" class="table table-striped">
 		{% for page in pages %}
 			<tr>
-                <td>{{ page }}</td>
+                <td><a href="{{ url('load_page', {slug:page}) }}">{{ page }}</a></td>
                 <td><a href="{{ url('admin_delete',{page: page, status:'published'}) }}">Delete</a></td>
-                <td><a href="{{ url('admin_edit',{page: page, status:'published'}) }}">Edit</a></td>
+                <td><a href="{{ url('admin_edit',{slug: page, status:'published'}) }}">Edit</a></td>
             </tr>
 		{% endfor %}
 	</table>
@@ -26,7 +26,7 @@
                 <tr>
                     <td>{{ draft }}</td>
                     <td><a href="{{ url('admin_delete',{page: draft, status:'draft'}) }}">Delete</a></td>
-                    <td><a href="{{ url('admin_edit',{page: draft, status:'draft'}) }}">Edit</a></td>
+                    <td><a href="{{ url('admin_edit',{slug: draft, status:'draft'}) }}">Edit</a></td>
                     <td><a href="{{ url('admin_publish',{draft: draft}) }}">Publish</a></td>
                 </tr>
             {% endfor %}

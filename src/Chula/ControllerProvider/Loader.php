@@ -25,7 +25,7 @@ class Loader implements ControllerProviderInterface
 
             return $app['twig']->render('user_page.twig', array('content' => $page->getHtmlContent()));
 
-        });
+        })->bind('load_page');
 
         return $controllers;
     }
