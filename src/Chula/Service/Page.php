@@ -9,6 +9,7 @@
 namespace Chula\Service;
 
 use Chula\Model\Page as PageModel;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class Page
 {
@@ -45,6 +46,16 @@ class Page
         return $pages;
     }
 
+    public function deletePage(PageModel $page)
+    {
+        try {
+            $this->removeFileFromPath($this->config['location'][$page->getType()].$page->getSlug());
+        } catch (\Exception $e) {
+            throw $e;
+        }
+
+    }
+
     //@todo this shouldn't be here
     private function getFileFromPath($filePath)
     {
@@ -60,5 +71,15 @@ class Page
     {
         $files = array_diff(scandir($filePath), array('..', '.'));
         return $files;
+    }
+
+    //@todo move this
+    private function removeFileFromPath($filePath)
+    {
+        if (!file_exists($filePath)) {
+           throw new FileNotFoundException();
+        }
+
+        unlink($filePath);
     }
 } 

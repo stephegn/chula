@@ -1,6 +1,7 @@
 <?php
 namespace Chula\ControllerProvider;
 
+use Chula\Service\Page as PageService;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,16 +14,21 @@ class DeletePage implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers->get(
-            '/{page}/{status}',
-            function ($page, $status) use ($app) {
+            '/{slug}/{status}',
+            function ($slug, $status) use ($app) {
 
-                if (!isset($app['config']['location'][$status])) {
-                    return new Response('That status does not exist', 404);
+                $pageService = new PageService($app['config']);
+                $page = $pageService->getPageFromSlugAndType($slug, $status);
+
+                if ($page == null) {
+                    return new Response('That page does not exist', 404);
                 }
-                $path = $app['config']['location'][$status] . $page;
-
-                if (file_exists($path)) {
-                    unlink($path);
+                try {
+                    $pageService->deletePage($page);
+                } catch (\FileNotFoundException $e) {
+                    return new Response('That file does not exist', 404);
+                } catch (\Exception $e) {
+                    return new Response('An error occurred', 500);
                 }
 
                 return $app->redirect($app['url_generator']->generate('admin'));
