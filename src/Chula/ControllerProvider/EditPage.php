@@ -22,6 +22,7 @@ class EditPage implements ControllerProviderInterface
         $controllers->get(
             '/{slug}/{status}',
             function ($slug, $status) use ($app, $form) {
+                //@todo move this check into service and use exceptions
                 if (!isset($app['config']['location'][$status])) {
                     return new Response('That status does not exist', 404);
                 }

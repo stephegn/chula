@@ -65,12 +65,10 @@ $app->register(
 $tags = array('if', 'for', 'block');
 $filters = array('upper', 'raw', 'escape');
 $methods = array(
-    'Page' => array('getTitle', 'getBody'),
+    'Chula\Model\Page' => array('getSlug', 'getHtmlContent'),
     'Symfony\Component\HttpFoundation\Request' => array('getbaseurl')
 );
-$properties = array(
-    'Page' => array('title', 'body'),
-);
+$properties = array();
 $functions = array('range');
 $policy = new Twig_Sandbox_SecurityPolicy($tags, $filters, $methods, $properties, $functions);
 $sandbox = new Twig_Extension_Sandbox($policy);

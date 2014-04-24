@@ -6,7 +6,7 @@
         <table class="table table-striped">
             {% for page in pages %}
                 <tr>
-                    <td><a href="{{ page.slug }}">{{ page.slug }}</a></td>
+                    <td><a href="{{ page.getSlug() }}">{{ page.getSlug() }}</a></td>
                 </tr>
             {% endfor %}
         </table>
