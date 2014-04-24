@@ -1,0 +1,54 @@
+<?php
+use \WebGuy;
+
+class PageCest
+{
+
+    public function _before()
+    {
+    }
+
+    public function _after()
+    {
+    }
+
+    protected function setup(WebGuy $I)
+    {
+        $I->cleanDir('content/drafts'); # cleanup
+        $I->cleanDir('content/pages');
+        AdminLoginPage::of($I)->login('admin', 'foo'); # login
+    }
+
+    // tests
+    /**
+     * @before setup
+     */
+    public function createNewPage(WebGuy $I)
+    {
+
+        $I->am('Administrator');
+        $I->wantTo('create a new page');
+        AdminHomePage::of($I)->clickNewPage();
+        NewPage::of($I)->createPage('test-draft', '#Testing');
+        $I->see('Drafts');
+        $I->seeElement('#drafts td');
+        $I->see('test-draft');
+        $I->seeFileFound('test-draft', 'content/drafts');
+    }
+
+    /**
+     * @before createNewPage
+     */
+
+    public function publishDraft(WebGuy $I)
+    {
+        $I->am('Administrator');
+        $I->wantTo('publish a draft');
+        $I->canSeeFileFound('test-draft', 'content/drafts');
+        AdminHomePage::of($I)->clickPublishPage('test-draft');
+        $I->see('Your Pages');
+        $I->seeElement('#published td');
+        $I->canSeeFileFound('test-draft', 'content/pages');
+    }
+
+}
