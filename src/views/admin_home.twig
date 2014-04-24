@@ -8,9 +8,9 @@
             <table id="published" class="table table-striped">
                 {% for page in pages %}
                     <tr>
-                        <td><a href="{{ url('load_page', {slug:page}) }}">{{ page }}</a></td>
-                        <td><a href="{{ url('admin_delete',{page: page, status:'published'}) }}">Delete</a></td>
-                        <td><a href="{{ url('admin_edit',{slug: page, status:'published'}) }}">Edit</a></td>
+                        <td><a href="{{ url('load_page', {slug:page.getSlug()}) }}">{{ page.getSlug() }}</a></td>
+                        <td><a href="{{ url('admin_delete',{page: page.getSlug(), status:page.getType()}) }}">Delete</a></td>
+                        <td><a href="{{ url('admin_edit',{slug: page.getSlug(), status:page.getType()}) }}">Edit</a></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -25,10 +25,10 @@
             <table id="drafts" class="table table-striped">
                 {% for draft in drafts %}
                     <tr>
-                        <td>{{ draft }}</td>
-                        <td><a href="{{ url('admin_delete',{page: draft, status:'draft'}) }}">Delete</a></td>
-                        <td><a href="{{ url('admin_edit',{slug: draft, status:'draft'}) }}">Edit</a></td>
-                        <td><a href="{{ url('admin_publish',{draft: draft}) }}">Publish</a></td>
+                        <td>{{ draft.getSlug() }}</td>
+                        <td><a href="{{ url('admin_delete',{page: draft.getSlug(), status:draft.getType()}) }}">Delete</a></td>
+                        <td><a href="{{ url('admin_edit',{slug: draft.getSlug(), status:draft.getType()}) }}">Edit</a></td>
+                        <td><a href="{{ url('admin_publish',{draft: draft.getSlug()}) }}">Publish</a></td>
                     </tr>
                 {% endfor %}
             </table>

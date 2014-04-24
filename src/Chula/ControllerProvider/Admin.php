@@ -4,6 +4,7 @@ namespace Chula\ControllerProvider;
 
 use Silex\Application;
 use Silex\ControllerProviderInterface;
+use Chula\Service\Page as PageService;
 
 class Admin implements ControllerProviderInterface
 {
@@ -18,14 +19,10 @@ class Admin implements ControllerProviderInterface
             function () use ($app) {
 
                 // grab all items in our content dir
-                $pages = array();
-                $drafts = array();
-                if (file_exists($app['config']['location']['published'])) {
-                    $pages = array_diff(scandir($app['config']['location']['published']), array('..', '.'));
-                }
-                if (file_exists($app['config']['location']['draft'])) {
-                    $drafts = array_diff(scandir($app['config']['location']['draft']), array('..', '.'));
-                }
+
+                $pageService = new PageService($app['config']);
+                $pages = $pageService->getAllPagesFromType('published');
+                $drafts = $pageService->getAllPagesFromType('draft');
 
                 return $app['twig']->render('admin_home.twig', array('pages' => $pages, 'drafts' => $drafts));
 

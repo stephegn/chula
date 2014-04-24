@@ -32,6 +32,19 @@ class Page
         return null;
     }
 
+    public function getAllPagesFromType($type)
+    {
+        $filePath = $this->config['location'][$type];
+        $pagesArray = $this->getFilesFromPath($filePath);
+
+        $pages = array();
+        foreach ($pagesArray as $pageName) {
+            $pages[] = $this->getPageFromSlugAndType($pageName, $type);
+        }
+
+        return $pages;
+    }
+
     //@todo this shouldn't be here
     private function getFileFromPath($filePath)
     {
@@ -40,5 +53,12 @@ class Page
             return $content;
         }
         return null;
+    }
+
+    //@todo this shouldn't be here
+    private function getFilesFromPath($filePath)
+    {
+        $files = array_diff(scandir($filePath), array('..', '.'));
+        return $files;
     }
 } 
