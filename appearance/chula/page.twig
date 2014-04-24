@@ -1,5 +1,5 @@
 {% extends "base.twig" %}
-{% block title %}Page{% endblock %}
+{% block title %}{{ page.getSlug() }}{% endblock %}
 {% block content %}
-    <div id="theContent">{{ content | raw }}</div>
+    <div id="theContent">{{ page.getHTMLContent() | raw }}</div>
 {% endblock %}
