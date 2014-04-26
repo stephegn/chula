@@ -9,35 +9,57 @@
 namespace Chula\Service;
 
 use Chula\Exception\PageExistsException;
-use Chula\Exception\TypeDoesNotExist;
 use Chula\Exception\TypeDoesNotExistException;
 use Chula\Model\Page as PageModel;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
+/**
+ * Class Page
+ * @package Chula\Service
+ */
 class Page
 {
 
-    private $config;
+	/**
+	 * @var
+	 */
+	private $config;
 
-    public function __construct($config)
+	/**
+	 * @param $config
+	 */
+	public function __construct($config)
     {
         $this->config = $config;
     }
 
-    public function getPageFromSlugAndType($slug, $type)
+	/**
+	 * @param $slug
+	 * @param $type
+	 * @throws \Exception
+	 * @return PageModel
+	 */
+	public function getPageFromSlugAndType($slug, $type)
     {
 		$this->checkTypeExists($type);
         $filePath = $this->config['location'][$type] . $slug;
-        $content = $this->getFileFromPath($filePath);
-        if ($content !== null) {
-            $page = new PageModel($slug, $content, $type, $this->config['encrypt']);
-            return $page;
-        }
 
-        return null;
+		try {
+			$content = $this->getFileFromPath($filePath);
+		} catch (\Exception $e) {
+			throw $e;
+		}
+		$page = new PageModel($slug, $content, $type, $this->config['encrypt']);
+
+		return $page;
+
     }
 
-    public function getAllPagesFromType($type)
+	/**
+	 * @param $type
+	 * @return array
+	 */
+	public function getAllPagesFromType($type)
     {
 		$this->checkTypeExists($type);
         $filePath = $this->config['location'][$type];
@@ -51,7 +73,11 @@ class Page
         return $pages;
     }
 
-    public function deletePage(PageModel $page)
+	/**
+	 * @param PageModel $page
+	 * @throws \Exception
+	 */
+	public function deletePage(PageModel $page)
     {
         try {
             $this->removeFileFromPath($this->config['location'][$page->getType()].$page->getSlug());
@@ -61,11 +87,37 @@ class Page
 
     }
 
+	/**
+	 * @param PageModel $page
+	 * @return PageModel
+	 * @throws \Exception
+	 */
+	public function publishPage(PageModel $page){
+
+		if ($page->getType() != 'draft') {
+			throw new \Exception('Cannot publish a page which is not a draft');
+		}
+
+		// Move page from drafts folder to content location
+		$draftPath = $this->config['location']['draft'] . $page->getSlug();
+		$publishedPath = $this->config['location']['published'] . $page->getSlug();
+
+		$this->moveFile($draftPath, $publishedPath);
+
+		$page->setType('published');
+		return $page;
+	}
+
+	/**
+	 * @param PageModel $newPage
+	 * @param PageModel $oldPage
+	 * @throws \Chula\Exception\PageExistsException
+	 */
 	public function savePage(PageModel $newPage, PageModel $oldPage = null)
 	{
 
 		if ($oldPage == null) {
-			if ($this->checkFileExists($this->config['location'], $newPage->getSlug())) {
+			if ($this->fileExistsInPaths($this->config['location'], $newPage->getSlug())) {
 				throw new PageExistsException();
 			}
 
@@ -77,24 +129,37 @@ class Page
 	}
 
     //@todo this shouldn't be here
-    private function getFileFromPath($filePath)
+	/**
+	 * @param $filePath
+	 * @throws \Symfony\Component\Filesystem\Exception\FileNotFoundException
+	 * @return string
+	 */
+	private function getFileFromPath($filePath)
     {
-        if (file_exists($filePath)) {
-            $content = file_get_contents($filePath);
-            return $content;
-        }
-        return null;
+        if (!file_exists($filePath)) {
+			throw new FileNotFoundException();
+		}
+		$content = file_get_contents($filePath);
+		return $content;
     }
 
     //@todo this shouldn't be here
-    private function getFilesFromPath($filePath)
+	/**
+	 * @param $filePath
+	 * @return array
+	 */
+	private function getFilesFromPath($filePath)
     {
         $files = array_diff(scandir($filePath), array('..', '.'));
         return $files;
     }
 
     //@todo move this
-    private function removeFileFromPath($filePath)
+	/**
+	 * @param $filePath
+	 * @throws \Symfony\Component\Filesystem\Exception\FileNotFoundException
+	 */
+	private function removeFileFromPath($filePath)
     {
         if (!file_exists($filePath)) {
            throw new FileNotFoundException();
@@ -104,6 +169,12 @@ class Page
     }
 
 	//@todo move this
+	/**
+	 * @param $filePath
+	 * @param $filename
+	 * @param $content
+	 * @throws \Exception
+	 */
 	private function saveFile($filePath, $filename, $content)
 	{
 		$this->makeFolderIfNotExists($filePath);
@@ -113,6 +184,10 @@ class Page
 
 	}
 
+	/**
+	 * @param $type
+	 * @throws \Chula\Exception\TypeDoesNotExistException
+	 */
 	private function checkTypeExists($type)
 	{
 		if(!isset($this->config['location'][$type])) {
@@ -121,6 +196,9 @@ class Page
 	}
 
 	//@todo move
+	/**
+	 * @param $filepath
+	 */
 	private function makeFolderIfNotExists($filepath)
 	{
 		if (!file_exists($filepath)) {
@@ -129,12 +207,33 @@ class Page
 	}
 
 	//@todo move
-	private function checkFileExists(array $filepaths, $filename)
+	/**
+	 * @param array $filepaths
+	 * @param $filename
+	 * @return bool
+	 */
+	private function fileExistsInPaths(array $filepaths, $filename)
 	{
 		foreach ($filepaths as $filepath) {
 			if (file_exists($filepath.$filename)) {
 				return true;
 			}
 		}
+	}
+
+	//@todo move
+	/**
+	 * @param $startPath
+	 * @param $endPath
+	 * @throws \Symfony\Component\Filesystem\Exception\FileNotFoundException
+	 */
+	private function moveFile($startPath, $endPath)
+	{
+		if (!file_exists($startPath)) {
+			throw new FileNotFoundException;
+		}
+
+		rename($startPath, $endPath);
+
 	}
 } 

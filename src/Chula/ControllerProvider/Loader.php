@@ -5,6 +5,7 @@ namespace Chula\ControllerProvider;
 use Chula\Service\Page as PageService;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class Loader implements ControllerProviderInterface
 {
@@ -19,11 +20,12 @@ class Loader implements ControllerProviderInterface
             function ($slug) use ($app) {
 
                 $pageService = new PageService($app['config']);
-                $page = $pageService->getPageFromSlugAndType($slug, 'published');
+				try {
 
-                if ($page == null) {
-                    $app->abort(404, "Those monkeys couldn't find the page you were after, hard luck.");
-                }
+					$page = $pageService->getPageFromSlugAndType($slug, 'published');
+				} catch (FileNotFoundException $e) {
+					$app->abort(404, "Those monkeys couldn't find the page you were after, hard luck.");
+				}
 
                 return $app['twig']->render('user_page.twig', array('page' => $page));
 

@@ -37,7 +37,7 @@ class NewPage implements ControllerProviderInterface
 					$pageService = new PageService($app['config']);
 
 					//Set content as empty string and then use setter is a hack for getting this to encrypt.
-					//Needs changing!
+					//@todo Needs changing!
 					$page = new \Chula\Model\Page($data['slug'], '', 'draft', $app['config']['encrypt']);
 					$page->setContent($data['content']);
 
