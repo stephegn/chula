@@ -13,20 +13,20 @@ class DeletePage implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers->get(
-          '/{page}/{status}',
-          function ($page, $status) use ($app) {
+            '/{page}/{status}',
+            function ($page, $status) use ($app) {
 
-              if (!isset($app['config']['location'][$status])) {
-                  return new Response('That status does not exist', 404);
-              }
-              $path = $app['config']['location'][$status] . $page;
+                if (!isset($app['config']['location'][$status])) {
+                    return new Response('That status does not exist', 404);
+                }
+                $path = $app['config']['location'][$status] . $page;
 
-              if (file_exists($path)) {
-                  unlink($path);
-              }
+                if (file_exists($path)) {
+                    unlink($path);
+                }
 
               return $app->redirect($app['url_generator']->generate('admin'));
-          }
+            }
         )->bind('admin_delete');
 
 
