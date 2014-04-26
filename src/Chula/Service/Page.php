@@ -23,6 +23,7 @@ class Page
 
     public function getPageFromSlugAndType($slug, $type)
     {
+		$this->checkTypeExists($type);
         $filePath = $this->config['location'][$type] . $slug;
         $content = $this->getFileFromPath($filePath);
         if ($content !== null) {
@@ -35,6 +36,7 @@ class Page
 
     public function getAllPagesFromType($type)
     {
+		$this->checkTypeExists($type);
         $filePath = $this->config['location'][$type];
         $pagesArray = $this->getFilesFromPath($filePath);
 
@@ -55,6 +57,15 @@ class Page
         }
 
     }
+
+	public function savePage(PageModel $newPage, PageModel $oldPage = null)
+	{
+
+		if ($oldPage != null && $newPage->getSlug() != $oldPage->getSlug()) {
+			$this->deletePage($oldPage);
+		}
+		$this->saveFile($this->config['location'][$newPage->getType()].$newPage->getSlug(), $newPage->getEncryptedContent());
+	}
 
     //@todo this shouldn't be here
     private function getFileFromPath($filePath)
@@ -82,4 +93,21 @@ class Page
 
         unlink($filePath);
     }
+
+	//@todo move this
+	private function saveFile($filePath, $content)
+	{
+
+		if(file_put_contents($filePath, $content, LOCK_EX) === false) {
+			throw new \Exception('Error saving file');
+		}
+
+	}
+
+	private function checkTypeExists($type)
+	{
+		if(!isset($this->config['location'][$type])) {
+			throw new \Exception('Type does not exist');
+		}
+	}
 } 

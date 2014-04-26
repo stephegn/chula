@@ -22,10 +22,6 @@ class EditPage implements ControllerProviderInterface
         $controllers->get(
             '/{slug}/{status}',
             function ($slug, $status) use ($app, $form) {
-                //@todo move this check into service and use exceptions
-                if (!isset($app['config']['location'][$status])) {
-                    return new Response('That status does not exist', 404);
-                }
 
                 $pageService = new PageService($app['config']);
                 $page = $pageService->getPageFromSlugAndType($slug, $status);
@@ -38,23 +34,21 @@ class EditPage implements ControllerProviderInterface
         )->bind('admin_edit');
 
         $controllers->post(
-            '/{page}/{status}',
-            function ($page, $status, Request $request) use ($app, $form) {
-                if (!isset($app['config']['location'][$status])) {
-                    return new Response('That status does not exist', 404);
-                }
+            '/{slug}/{status}',
+            function ($slug, $status, Request $request) use ($app, $form) {
+
                 $form->bind($request);
 
                 if ($form->isValid()) {
                     $data = $form->getData();
-                    $content = ($app['config']['encrypt']) ? Encryption::encrypt($data['content']) : $data['content'];
 
-                    $slug = StringManipulation::toSlug($data['slug']);
-                    if ($slug != $page) {
-                        unlink($app['config']['location'][$status] . $page);
-                    }
+					$pageService = new PageService($app['config']);
+					$oldPage = $pageService->getPageFromSlugAndType($slug, $status);
+					$newPage = clone($oldPage);
+					$newPage->setSlug($data['slug']);
+					$newPage->setContent($data['content']);
 
-                    file_put_contents($app['config']['location'][$status] . $slug, $content, LOCK_EX);
+                   	$pageService->savePage($newPage, $oldPage);
 
                     return $app->redirect($app['url_generator']->generate('admin'));
                 }

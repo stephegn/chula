@@ -38,7 +38,7 @@ class Page
     {
         $this->config = $config;
         $this->setSlug($slug);
-        $this->setContent($content);
+        $this->content = $content;
         $this->setType($type);
     }
 
@@ -63,7 +63,8 @@ class Page
      */
     public function setContent($content)
     {
-        $this->content = $content;
+		$encryptedContent = ($this->config['encrypt']) ? Encryption::encrypt($content) : $content;
+        $this->content = $encryptedContent;
     }
 
     /**
@@ -81,6 +82,15 @@ class Page
         //@todo should this be here?
         return Markdown::defaultTransform($this->getContent());
     }
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getEncryptedContent()
+	{
+		return $this->content;
+	}
 
     /**
      * @param mixed $slug
