@@ -34,12 +34,6 @@ class NewPage implements ControllerProviderInterface{
                     }
                     $slug = StringManipulation::toSlug($data['slug']);
 
-                    // Ensure drafts folder has been created
-                    if (!file_exists($app['config']['location']['draft']))
-                    {
-                        mkdir($app['config']['location']['draft']);
-                    }
-
                     // Default to a draft.
                     if (!file_exists($app['config']['location']['draft'] . $slug))
                     {
