@@ -9,9 +9,11 @@
 namespace Chula\Exception;
 
 
-class PageExistsException extends \Exception {
+class PageExistsException extends \Exception
+{
 
-	public function __construct() {
-		parent::__construct('That page already exists');
-	}
-} 
+    public function __construct()
+    {
+        parent::__construct('That page already exists');
+    }
+}

@@ -34,25 +34,25 @@ class NewPage implements ControllerProviderInterface
                 if ($form->isValid()) {
                     $data = $form->getData();
 
-					$pageService = new PageService($app['config']);
+                    $pageService = new PageService($app['config']);
 
-					//Set content as empty string and then use setter is a hack for getting this to encrypt.
-					//@todo Needs changing!
-					$page = new \Chula\Model\Page($data['slug'], '', 'draft', $app['config']['encrypt']);
-					$page->setContent($data['content']);
+                    //Set content as empty string and then use setter is a hack for getting this to encrypt.
+                    //@todo Needs changing!
+                    $page = new \Chula\Model\Page($data['slug'], '', 'draft', $app['config']['encrypt']);
+                    $page->setContent($data['content']);
 
-					try {
-						$pageService->savePage($page);
+                    try {
+                        $pageService->savePage($page);
 
-						return $app->redirect($app['url_generator']->generate('admin'));
+                        return $app->redirect($app['url_generator']->generate('admin'));
 
-					} catch (PageExistsException $e) {
+                    } catch (PageExistsException $e) {
 
-						return $app['twig']->render(
-							'admin_edit_page.twig',
-							array('form' => $form->createView(), 'messages' => array($e->getMessage()))
-						);
-					}
+                        return $app['twig']->render(
+                            'admin_edit_page.twig',
+                            array('form' => $form->createView(), 'messages' => array($e->getMessage()))
+                        );
+                    }
                 }
             }
         )->bind('admin_new');

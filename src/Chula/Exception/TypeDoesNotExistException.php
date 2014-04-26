@@ -9,9 +9,11 @@
 namespace Chula\Exception;
 
 
-class TypeDoesNotExistException extends \Exception {
+class TypeDoesNotExistException extends \Exception
+{
 
-	public function __construct() {
-		parent::__construct('That type does not exist');
-	}
-} 
+    public function __construct()
+    {
+        parent::__construct('That type does not exist');
+    }
+}

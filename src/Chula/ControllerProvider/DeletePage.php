@@ -19,13 +19,13 @@ class DeletePage implements ControllerProviderInterface
             function ($slug, $status) use ($app) {
 
                 $pageService = new PageService($app['config']);
-				try {
+                try {
 
-					$page = $pageService->getPageFromSlugAndType($slug, $status);
-				} catch (FileNotFoundException $e) {
+                    $page = $pageService->getPageFromSlugAndType($slug, $status);
+                } catch (FileNotFoundException $e) {
 
-					return new Response('That page does not exist', 404);
-				}
+                    return new Response('That page does not exist', 404);
+                }
 
                 try {
 

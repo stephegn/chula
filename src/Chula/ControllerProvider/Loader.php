@@ -20,12 +20,12 @@ class Loader implements ControllerProviderInterface
             function ($slug) use ($app) {
 
                 $pageService = new PageService($app['config']);
-				try {
+                try {
 
-					$page = $pageService->getPageFromSlugAndType($slug, 'published');
-				} catch (FileNotFoundException $e) {
-					$app->abort(404, "Those monkeys couldn't find the page you were after, hard luck.");
-				}
+                    $page = $pageService->getPageFromSlugAndType($slug, 'published');
+                } catch (FileNotFoundException $e) {
+                    $app->abort(404, "Those monkeys couldn't find the page you were after, hard luck.");
+                }
 
                 return $app['twig']->render('user_page.twig', array('page' => $page));
 

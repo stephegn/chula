@@ -47,25 +47,25 @@ class EditPage implements ControllerProviderInterface
                 if ($form->isValid()) {
                     $data = $form->getData();
 
-					$pageService = new PageService($app['config']);
-					try {
+                    $pageService = new PageService($app['config']);
+                    try {
 
-						$oldPage = $pageService->getPageFromSlugAndType($slug, $status);
-					} catch (FileNotFoundException $e) {
+                        $oldPage = $pageService->getPageFromSlugAndType($slug, $status);
+                    } catch (FileNotFoundException $e) {
 
-						return new Response('That page does not exist', 404);
-					}
-					$newPage = clone($oldPage);
-					$newPage->setSlug($data['slug']);
-					$newPage->setContent($data['content']);
+                        return new Response('That page does not exist', 404);
+                    }
+                    $newPage = clone($oldPage);
+                    $newPage->setSlug($data['slug']);
+                    $newPage->setContent($data['content']);
 
-					try {
+                    try {
 
-						$pageService->savePage($newPage, $oldPage);
-					} catch (\Exception $e) {
+                        $pageService->savePage($newPage, $oldPage);
+                    } catch (\Exception $e) {
 
-						return new Response($e->getMessage(), 500);
-					}
+                        return new Response($e->getMessage(), 500);
+                    }
 
                     return $app->redirect($app['url_generator']->generate('admin'));
                 }

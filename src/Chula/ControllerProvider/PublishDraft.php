@@ -24,19 +24,19 @@ class PublishDraft implements ControllerProviderInterface
             '/{draft}',
             function ($draft) use ($app) {
 
-				$pageService = new PageService($app['config']);
-				try {
+                $pageService = new PageService($app['config']);
+                try {
 
-					$page = $pageService->getPageFromSlugAndType($draft, 'draft');
-				} catch (FileNotFoundException $e) {
-					return new Response('That page does not exist', 404);
-				}
-				try {
+                    $page = $pageService->getPageFromSlugAndType($draft, 'draft');
+                } catch (FileNotFoundException $e) {
+                    return new Response('That page does not exist', 404);
+                }
+                try {
 
-					$pageService->publishPage($page);
-				} catch (\Exception $e) {
-					return new Response('An error occurred', 500);
-				}
+                    $pageService->publishPage($page);
+                } catch (\Exception $e) {
+                    return new Response('An error occurred', 500);
+                }
 
                 return $app->redirect($app['url_generator']->generate('admin'));
             }
