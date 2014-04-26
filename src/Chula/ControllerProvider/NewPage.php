@@ -1,9 +1,9 @@
 <?php
 namespace Chula\ControllerProvider;
 
+use Chula\Exception\PageExistsException;
 use Chula\Form\PageType;
-use Chula\Tools\Encryption;
-use Chula\Tools\StringManipulation;
+use Chula\Service\Page as PageService;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,30 +34,25 @@ class NewPage implements ControllerProviderInterface
                 if ($form->isValid()) {
                     $data = $form->getData();
 
-                    $content = $data['content'];
-                    if ($app['config']['encrypt']) {
-                        $content = Encryption::encrypt($content);
-                    }
-                    $slug = StringManipulation::toSlug($data['slug']);
+					$pageService = new PageService($app['config']);
 
-                    // Ensure drafts folder has been created
-                    if (!file_exists($app['config']['location']['draft'])) {
-                        mkdir($app['config']['location']['draft']);
-                    }
+					//Set content as empty string and then use setter is a hack for getting this to encrypt.
+					//Needs changing!
+					$page = new \Chula\Model\Page($data['slug'], '', 'draft', $app['config']['encrypt']);
+					$page->setContent($data['content']);
 
-                    // Default to a draft.
-                    if (!file_exists($app['config']['location']['draft'] . $slug)) {
-                        file_put_contents($app['config']['location']['draft'] . $slug, $content, LOCK_EX);
+					try {
+						$pageService->savePage($page);
 
-                        return $app->redirect($app['url_generator']->generate('admin'));
-                    } else {
-                        //@todo need a better flash system
-                        return $app['twig']->render(
-                            'admin_edit_page.twig',
-                            array('form' => $form->createView(), 'messages' => array('That page already exists'))
-                        );
+						return $app->redirect($app['url_generator']->generate('admin'));
 
-                    }
+					} catch (PageExistsException $e) {
+
+						return $app['twig']->render(
+							'admin_edit_page.twig',
+							array('form' => $form->createView(), 'messages' => array($e->getMessage()))
+						);
+					}
                 }
             }
         )->bind('admin_new');

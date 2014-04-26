@@ -34,9 +34,18 @@ class Page
      */
     private $content;
 
-    public function __construct($config, $slug, $content, $type)
+	/**
+	 * @var Bool
+	 */private $encrypted;
+
+    /**
+	 * @param $slug
+	 * @param $content
+	 * @param $type
+	 * @param $encrypted
+	 */public function __construct($slug, $content, $type, $encrypted)
     {
-        $this->config = $config;
+        $this->setEncrypted($encrypted);
         $this->setSlug($slug);
         $this->content = $content;
         $this->setType($type);
@@ -63,7 +72,7 @@ class Page
      */
     public function setContent($content)
     {
-		$encryptedContent = ($this->config['encrypt']) ? Encryption::encrypt($content) : $content;
+		$encryptedContent = ($this->isEncrypted()) ? Encryption::encrypt($content) : $content;
         $this->content = $encryptedContent;
     }
 
@@ -73,11 +82,13 @@ class Page
     public function getContent()
     {
         //@todo should this be here???
-        $content = ($this->config['encrypt']) ? Encryption::decrypt($this->content) : $this->content;
+        $content = ($this->isEncrypted()) ? Encryption::decrypt($this->content) : $this->content;
         return $content;
     }
 
-    public function getHtmlContent()
+    /**
+	 * @return mixed
+	 */public function getHtmlContent()
     {
         //@todo should this be here?
         return Markdown::defaultTransform($this->getContent());
@@ -108,4 +119,18 @@ class Page
     {
         return $this->slug;
     }
+
+	/**
+	 * @param mixed $encrypted
+	 */
+	public function setEncrypted($encrypted)
+	{
+		$this->encrypted = $encrypted;
+	}/**
+	 * @return mixed
+	 */
+	public function isEncrypted()
+	{
+		return $this->encrypted;
+	}
 } 
