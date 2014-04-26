@@ -1,30 +1,31 @@
 {# This template is the main template to be extended by all other pages #}
 <!DOCTYPE html>
 <html>
-  <head>
-      {% block head %}<meta name="viewport" content="width=device-width, initial-scale=1.0">{% endblock%}
-	<title>{% block title %}Chula{% endblock %}</title>
-  </head>
-  <body>
-    <div id="wrap">
-        <div class="container">
-                {% block content %} {% endblock %}
-        </div>
+<head>
+    {% block head %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">{% endblock %}
+    <title>{% block title %}Chula{% endblock %}</title>
+</head>
+<body>
+<div id="wrap">
+    <div class="container">
+        {% block content %} {% endblock %}
     </div>
-    <div id="footer">
-        <div class="container">
-            {% block footer %}
-                &copy; Copyright 2014 by <a href="https://github.com/stephcook22/chula/">Chula</a>.
-            {% endblock %}
-        </div>
+</div>
+<div id="footer">
+    <div class="container">
+        {% block footer %}
+            &copy; Copyright 2014 by <a href="https://github.com/stephcook22/chula/">Chula</a>.
+        {% endblock %}
     </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="http://code.jquery.com/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
 
-    <!-- Latest compiled and minified JavaScript for Bootstrap-->
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<!-- Latest compiled and minified JavaScript for Bootstrap-->
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
-    {% block scripts %} {% endblock %}
-  </body>
+{% block scripts %} {% endblock %}
+</body>
 </html>
