@@ -14,6 +14,7 @@ class AdminHomePage
     public static $newPageLink = '#new-page';
     public static $viewSiteLink = '#view-site';
     public static $logoutLink = '#logout';
+    public static $publishLabel = 'Publish';
 
     /**
      * Basic route example for your current URL
@@ -52,4 +53,14 @@ class AdminHomePage
 
         return $this;
     }
+
+    public function clickPublishPage($pagename)
+    {
+        $I = $this->webGuy;
+
+        $I->amOnPage(self::$URL);
+        $link = self::$URL . '/publish/' . $pagename;
+        $I->amOnPage($link);
+    }
+
 }
