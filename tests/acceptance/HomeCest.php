@@ -21,7 +21,7 @@ class HomeCest
         $I->copyDir('tests/_data/config_list_home', 'config');
         $I->cleanDir('content/drafts');
         $I->cleanDir('content/pages');
-        $I->copyDir('tests/_data/content', 'content');
+        $I->copyDir('tests/_data/default_content', 'content');
         $I->amOnPage('/');
         $I->see('how-to-create-awesome-posts-in-chula');
         $I->dontSee('wordpress-is-awesome');
