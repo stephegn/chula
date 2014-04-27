@@ -3,6 +3,7 @@ require_once __DIR__ . '/bootstrap.php';
 
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 foreach ($app['config']['location'] as $path) {
     if (!is_dir($path)) {
@@ -13,48 +14,60 @@ foreach ($app['config']['location'] as $path) {
 $app->mount('/', new Chula\ControllerProvider\HomePage());
 
 $app->mount(
-  '/' . $app['config']['admin_path'],
-  new Chula\ControllerProvider\Admin()
+    '/' . $app['config']['admin_path'],
+    new Chula\ControllerProvider\Admin()
 );
 
 $app->mount(
-  '/{page}',
-  new Chula\ControllerProvider\Loader()
+    '/{page}',
+    new Chula\ControllerProvider\Loader()
 );
 
 $app->mount(
-  '/' . $app['config']['admin_path'] . '/new',
-  new Chula\ControllerProvider\NewPage()
+    '/' . $app['config']['admin_path'] . '/new',
+    new Chula\ControllerProvider\NewPage()
 );
 
 $app->mount(
-  '/' . $app['config']['admin_path'] . '/delete',
-  new Chula\ControllerProvider\DeletePage()
+    '/' . $app['config']['admin_path'] . '/delete',
+    new Chula\ControllerProvider\DeletePage()
 );
 
 $app->mount(
-  '/' . $app['config']['admin_path'] . '/edit',
-  new Chula\ControllerProvider\EditPage()
+    '/' . $app['config']['admin_path'] . '/edit',
+    new Chula\ControllerProvider\EditPage()
 );
 
 $app->mount(
-  '/' . $app['config']['admin_path'] . '/publish',
-  new Chula\ControllerProvider\PublishDraft()
+    '/' . $app['config']['admin_path'] . '/publish',
+    new Chula\ControllerProvider\PublishDraft()
 );
 
 
 $app->get(
-  '/login',
-  function (Request $request) use ($app) {
-      return $app['twig']->render(
-        'admin_login.twig',
-        array(
-          'error'         => $app['security.last_error']($request),
-          'last_username' => $app['session']->get('_security.last_username'),
-        )
-      );
-  }
+    '/login',
+    function (Request $request) use ($app) {
+        return $app['twig']->render(
+            'admin_login.twig',
+            array(
+              'error'         => $app['security.last_error']($request),
+              'last_username' => $app['session']->get('_security.last_username'),
+            )
+        );
+    }
 );
 
-$app->run(); 
+//@todo make these editable in the template
+$app->error(function (\Exception $e, $code) {
+    switch ($code) {
+        case 404:
+            $message = 'Those monkeys couldn\'t find the page you were after, hard luck.';
+            break;
+        default:
+            $message = $e->getMessage();
+    }
 
+    return new Response($message);
+});
+
+$app->run();
