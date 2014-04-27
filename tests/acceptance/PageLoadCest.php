@@ -35,4 +35,16 @@ class PageLoadCest
         $I->amOnPage('/this-page-doesnt-exist/');
         $I->see('Those monkeys couldn\'t find the page you were after, hard luck.');
     }
+
+    public function viewADraftPage(WebGuy $I)
+    {
+        $I->am('User');
+        $I->wantTo('view a page that has not yet been published');
+        $I->expect('to not be able to view this page');
+        $I->cleanDir('content/drafts');
+        $I->cleanDir('content/pages');
+        $I->copyDir('tests/_data/default_content', 'content');
+        $I->amOnPage('/wordpress-is-awesome/');
+        $I->see('Those monkeys couldn\'t find the page you were after, hard luck.');
+    }
 }
