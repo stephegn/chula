@@ -15,6 +15,7 @@ class AdminHomePage
     public static $viewSiteLink = '#view-site';
     public static $logoutLink = '#logout';
     public static $publishLabel = 'Publish';
+    public static $deleteLabel = 'Delete';
 
     /**
      * Basic route example for your current URL
@@ -60,6 +61,15 @@ class AdminHomePage
 
         $I->amOnPage(self::$URL);
         $link = self::$URL . '/publish/' . $pagename;
+        $I->amOnPage($link);
+    }
+
+    public function clickDeletePage($pagename, $type)
+    {
+        $I = $this->webGuy;
+
+        $I->amOnPage(self::$URL);
+        $link = self::$URL . '/delete/' . $pagename.'/'.$type;
         $I->amOnPage($link);
     }
 
