@@ -42,13 +42,13 @@ class PageCest
 	public function createExistingPage(WebGuy $I)
 	{
 
-		$I->am('Administrator');
-		$I->wantTo('create a new page which already exists');
-		AdminLoginPage::of($I)->login('admin', 'foo');
-		AdminHomePage::of($I)->clickNewPage();
-		NewPage::of($I)->createPage('test-draft', '#Testing');
-		$I->see('That page already exists');
-		$I->cleanDir('content/drafts');
+        $I->am('Administrator');
+        $I->wantTo('create a new page which already exists');
+        AdminLoginPage::of($I)->login('admin', 'foo');
+        AdminHomePage::of($I)->clickNewPage();
+        NewPage::of($I)->createPage('test-draft', '#Testing');
+        $I->see('That page already exists');
+        $I->cleanDir('content/drafts');
 	}
 
     /**
@@ -59,10 +59,25 @@ class PageCest
         $I->am('Administrator');
         $I->wantTo('publish a draft');
         $I->canSeeFileFound('test-draft', 'content/drafts');
+        AdminLoginPage::of($I)->login('admin', 'foo');
         AdminHomePage::of($I)->clickPublishPage('test-draft');
         $I->see('Your Pages');
         $I->seeElement('#published td');
         $I->canSeeFileFound('test-draft', 'content/pages');
+    }
+
+    /**
+     * @before publishDraft
+     */
+    public function deletePage(WebGuy $I)
+    {
+        $I->am('Administrator');
+        $I->wantTo('delete a page');
+        $I->canSeeFileFound('test-draft', 'content/pages');
+        AdminLoginPage::of($I)->login('admin', 'foo');
+        AdminHomePage::of($I)->clickDeletePage('test-draft', 'published');
+        $I->see('Your Pages');
+        $I->dontSee('test-draft');
     }
 
 }
