@@ -19,11 +19,7 @@ $app->mount(
 );
 
 $app->mount(
-<<<<<<< HEAD
     '/{slug}',
-=======
-    '/{page}',
->>>>>>> master
     new Chula\ControllerProvider\Loader()
 );
 
@@ -54,13 +50,8 @@ $app->get(
         return $app['twig']->render(
             'admin_login.twig',
             array(
-<<<<<<< HEAD
                 'error' => $app['security.last_error']($request),
                 'last_username' => $app['session']->get('_security.last_username'),
-=======
-              'error'         => $app['security.last_error']($request),
-              'last_username' => $app['session']->get('_security.last_username'),
->>>>>>> master
             )
         );
     }
