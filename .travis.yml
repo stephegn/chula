@@ -24,7 +24,7 @@ before_script:
  - composer install
  - mkdir -p tests/_log
  - mkdir -p content/drafts content/pages
- - php -S localhost:8000 -t web/ &
+ - php -S localhost:8000 -t web/ > /dev/null 2>&1 &
  - sudo chmod -R 777 content
  - php codecept.phar build
  - wget https://raw.github.com/Codeception/c3/master/c3.php
