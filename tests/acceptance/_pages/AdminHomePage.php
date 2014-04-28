@@ -73,4 +73,13 @@ class AdminHomePage
         $I->amOnPage($link);
     }
 
+    public function clickEditPage($pagename, $type)
+    {
+        $I = $this->webGuy;
+
+        $I->amOnPage(self::$URL);
+        $link = self::$URL . '/edit/' . $pagename.'/'.$type;
+        $I->amOnPage($link);
+    }
+
 }
