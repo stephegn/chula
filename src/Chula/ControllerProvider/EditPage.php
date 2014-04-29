@@ -23,13 +23,13 @@ class EditPage implements ControllerProviderInterface
             function ($slug, $status) use ($app, $form) {
 
                 $pageService = new PageService($app['config']);
-				try {
+                try {
 
-					$page = $pageService->getPageFromSlugAndType($slug, $status);
-				} catch (FileNotFoundException $e) {
+                    $page = $pageService->getPageFromSlugAndType($slug, $status);
+                } catch (FileNotFoundException $e) {
 
-					return new Response('That page does not exist', 404);
-				}
+                    return new Response('That page does not exist', 404);
+                }
 
                 $form->get('slug')->setData($page->getSlug());
                 $form->get('content')->setData($page->getContent());
