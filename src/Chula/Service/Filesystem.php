@@ -8,6 +8,8 @@
 
 namespace Chula\Service;
 
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Chula\Model\Page;
 
 /**
  * Class Filesystem
@@ -36,47 +38,43 @@ class Filesystem implements StorageInterface
         $this->config = $config;
     }
 
-    /**
-     * @param $name
-     * @param $data
-     */
     public function create($name, $data)
     {
-        // TODO: Implement create() method.
+        $parent = $this->config['draft']['location'];
+        if (!file_exists($parent)) {
+            mkdir($parent);
+        }
+        if (file_put_contents($parent . $name, $data, LOCK_EX) === false) {
+            throw new \Exception('Error saving file');
+        }
     }
 
-    /**
-     * @param $name
-     * @param $data
-     */
-    public function update($name, $data)
+    public function update(Page $name, $data)
     {
         // TODO: Implement update() method.
     }
 
-    /**
-     * @param $name
-     */
-    public function read($name)
+
+    public function read($path)
     {
-        // TODO: Implement read() method.
+        if (!file_exists($path)) {
+            throw new FileNotFoundException();
+        }
+        return file_get_contents($path);
     }
 
-    /**
-     * @param $name
-     */
     public function publish($name)
     {
-        // TODO: Implement publish() method.
+        $path['draft']     = $this->config['location']['draft'] . $name;
+        $path['published'] = $this->config['location']['published'] . $name;
+        if (!file_exists($path['draft'])) {
+            throw new FileNotFoundException;
+        }
+
+        return rename($path['draft'], $path['published']);
     }
 
-    /**
-     * @param $page
-     *
-     * @throws FileNotFoundException
-     * @throws \Exception
-     */
-    public function delete($page)
+    public function delete(Page $page)
     {
         try {
             $filePath = $this->config['location'][$page->getType()] . $page->getSlug();
@@ -84,7 +82,7 @@ class Filesystem implements StorageInterface
                 throw new FileNotFoundException();
             }
 
-            unlink($filePath);
+            return unlink($filePath);
 
         } catch (\Exception $e) {
             throw $e;

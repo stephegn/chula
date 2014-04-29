@@ -8,14 +8,15 @@
 
 namespace Chula\Service;
 
+use Chula\Model\Page;
 
 interface StorageInterface
 {
     public function create($name, $data);
 
-    public function delete($name);
+    public function delete(Page $name);
 
-    public function update($name, $data);
+    public function update(Page $name, $data);
 
     public function read($name);
 
