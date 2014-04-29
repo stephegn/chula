@@ -95,7 +95,7 @@ class PageCest
         $I->canSeeFileFound('test-draft', 'content/pages');
         AdminLoginPage::of($I)->login('admin', 'foo');
         AdminHomePage::of($I)->clickDeletePage('test-draft', 'pages');
-        $I->see('That status does not exist');
+        $I->see('That type does not exist');
         $I->dontSee('test-draft');
     }
 
