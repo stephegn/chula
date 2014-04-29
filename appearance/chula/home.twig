@@ -2,11 +2,10 @@
 {% block title %}Home{% endblock %}
 {% block content %}
     <div id="theContent">
-        List of all the posts
         <table class="table table-striped">
             {% for page in pages %}
                 <tr>
-                    <td><a href="{{ page.slug }}">{{ page.slug }}</a></td>
+                    <td>{{ page.content|truncate(200)|raw }}<br><a href="{{ page.slug }}">Read more..</a></td>
                 </tr>
             {% endfor %}
         </table>

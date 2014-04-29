@@ -59,11 +59,15 @@ $app->register(
   ))
 );
 
+$app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
+    $twig->addExtension(new Twig_Extensions_Extension_Text());
+    return $twig;
+}));
 
 //Twig sandbox policy
 //@todo some of these can be removed with proper methods in place
 $tags       = array('if', 'for', 'block');
-$filters    = array('upper', 'raw', 'escape');
+$filters    = array('upper', 'raw', 'escape', 'truncate');
 $methods    = array(
   'Page'                                     => array('getTitle', 'getBody'),
   'Symfony\Component\HttpFoundation\Request' => array('getbaseurl')
