@@ -3,6 +3,7 @@
 namespace Chula\ControllerProvider;
 
 use Chula\Tools\Encryption;
+use Chula\Tools\FileManipulation;
 use Michelf\Markdown;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
@@ -25,7 +26,7 @@ class HomePage implements ControllerProviderInterface
               // grab all items in our content dir
               $pageNames = array();
               if (file_exists($app['config']['location']['published'])) {
-                  $pageNames = array_diff(scandir($app['config']['location']['published']), array('..', '.'));
+                  $pageNames = FileManipulation::listDirByDate($app['config']['location']['published']);
               }
 
               $pages = array();

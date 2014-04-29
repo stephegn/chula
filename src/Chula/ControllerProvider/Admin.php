@@ -2,6 +2,7 @@
 
 namespace Chula\ControllerProvider;
 
+use Chula\Tools\FileManipulation;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 
@@ -21,10 +22,10 @@ class Admin implements ControllerProviderInterface
               $pages  = array();
               $drafts = array();
               if (file_exists($app['config']['location']['published'])) {
-                  $pages = array_diff(scandir($app['config']['location']['published']), array('..', '.'));
+                  $pages = FileManipulation::listDirByDate($app['config']['location']['published']);
               }
               if (file_exists($app['config']['location']['draft'])) {
-                  $drafts = array_diff(scandir($app['config']['location']['draft']), array('..', '.'));
+                  $drafts = FileManipulation::listDirByDate($app['config']['location']['draft']);
               }
 
               return $app['twig']->render('admin_home.twig', array('pages' => $pages, 'drafts' => $drafts));
