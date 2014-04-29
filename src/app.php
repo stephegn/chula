@@ -58,16 +58,16 @@ $app->get(
 );
 
 //@todo make these editable in the template
-$app->error(function (\Exception $e, $code) {
+$app->error(function (\Exception $e, $code) use ($app) {
     switch ($code) {
         case 404:
             $message = 'Those monkeys couldn\'t find the page you were after, hard luck.';
+            return $app['twig']->render('user_404.twig', array('message' => $message));
             break;
         default:
             $message = $e->getMessage();
+            return $app['twig']->render('user_error.twig', array('message' => $message));
     }
-
-    return new Response($message);
 });
 
 $app->run();

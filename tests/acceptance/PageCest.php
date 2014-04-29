@@ -69,6 +69,39 @@ class PageCest
     /**
      * @before publishDraft
      */
+    public function editExistingPage(WebGuy $I)
+    {
+        $I->am('Administrator');
+        $I->wantTo('edit a page');
+        $I->canSeeFileFound('test-draft', 'content/pages');
+        AdminLoginPage::of($I)->login('admin', 'foo');
+        AdminHomePage::of($I)->clickEditPage('test-draft', 'published');
+        $I->seeElement('#page_slug');
+        $I->seeElement('#page_content');
+        $I->seeInField('#page_slug', 'test-draft');
+        $I->fillField('#page_content', 'This is a great page');
+        $I->click('submit');
+        $I->amOnPage('/test-draft');
+        $I->see('This is a great page');
+    }
+
+    /**
+     * @before publishDraft
+     */
+    public function deletePageBadStatus(WebGuy $I)
+    {
+        $I->am('Administrator');
+        $I->wantTo('delete a page with a bad status');
+        $I->canSeeFileFound('test-draft', 'content/pages');
+        AdminLoginPage::of($I)->login('admin', 'foo');
+        AdminHomePage::of($I)->clickDeletePage('test-draft', 'pages');
+        $I->see('That status does not exist');
+        $I->dontSee('test-draft');
+    }
+
+    /**
+     * @before publishDraft
+     */
     public function deletePage(WebGuy $I)
     {
         $I->am('Administrator');
@@ -79,5 +112,7 @@ class PageCest
         $I->see('Your Pages');
         $I->dontSee('test-draft');
     }
+
+
 
 }
