@@ -32,21 +32,32 @@ The following are twig variables which are always accessible in any of your temp
 The page templates currently called are:
   * home.twig
   * page.twig
+  * 404.twig
+  * error.twig
 
 They must be named as shown above.
 
 ####home.twig
 You are passed an array of pages.
-Each page in this array has a slug and content.
+Each page in this array has a slug, date and content.
 To render the page content you MUST use `{{ content | raw}}`
 
 ####page.twig
-You are currently only passed the content to this page
+You are currently passed the content to this page.
+You are now also passed the `{{date}}` and the `{{slug}}`
 To render the page content you MUST use `{{ content | raw}}`
+
+You can format the date with the date filter in twig eg `{{page.date|date}}`
+You also have access to the truncate filter eg `{{ page.content|truncate(150)|raw }}`
+
+####error.twig and 404.twig
+These are called if an error or specifically a 404 error occurs.
+You are passed in the `{{message}}` which you can display if you like.
 
 ##Tests
 Tests have been setup in the tests/ directory using Codeception.
 ###Coverage
 wget https://raw.github.com/Codeception/c3/master/c3.php
+
 vendor/codeception/codeception/codecept run --coverage --xml --html
 
