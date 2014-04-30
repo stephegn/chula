@@ -5,7 +5,7 @@
         <table class="table table-striped">
             {% for page in pages %}
                 <tr>
-                    <td>{{ page.content|truncate(200)|raw }}<br><a href="{{ page.slug }}">Read more..</a></td>
+                    <td>{{ page.time|date }}{{ page.content|truncate(200)|raw }}<br><a href="{{ page.slug }}">Read more..</a></td>
                 </tr>
             {% endfor %}
         </table>

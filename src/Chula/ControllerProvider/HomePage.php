@@ -32,9 +32,10 @@ class HomePage implements ControllerProviderInterface
               $pages = array();
 
               //@todo this should be in a service
-              foreach ($pageNames as $page) {
+              foreach ($pageNames as $timeKey => $page) {
                   $content = file_get_contents($app['config']['location']['published'] . '/' . $page);
 
+                  $timeArray = explode(",", $timeKey);
                   if ($app['config']['encrypt']) {
                       // Need to decrypt the content first if we're set to use encryption
                       $content = Encryption::decrypt($content);
@@ -44,6 +45,7 @@ class HomePage implements ControllerProviderInterface
 
                   $pages[$page]['slug']    = $page;
                   $pages[$page]['content'] = $html;
+                  $pages[$page]['time'] = $timeArray[0];
               }
 
               return $app['twig']->render('user_home.twig', array('pages' => $pages));
