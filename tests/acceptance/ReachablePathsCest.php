@@ -18,7 +18,8 @@ class ReachablePathsCest
         $I->am('Visitor');
         $I->wantTo('Ensure homepage is accessible');
         $I->amOnPage('/');
-        $I->see('List of all the posts');
+        $I->see('Testing');
+        $I->see('This is how to create great posts in chula');
     }
 
     public function tryToAccessLogin(WebGuy $I)

@@ -23,7 +23,7 @@ class HomeCest
         $I->cleanDir('content/pages');
         $I->copyDir('tests/_data/default_content', 'content');
         $I->amOnPage('/');
-        $I->see('how-to-create-awesome-posts-in-chula');
+        $I->see('This is how to create great posts in chula');
         $I->dontSee('wordpress-is-awesome');
 
 
