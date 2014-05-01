@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "620c77802230226bd4c3052d9fbd935e",
+    "hash": "4ba6262d684bc936439ab7fa785a9cf8",
     "packages": [
         {
             "name": "filp/whoops",
@@ -2092,7 +2092,7 @@
                 {
                     "name": "Anthon Pang",
                     "email": "apang@softwaredevelopment.ca",
-                    "role": "Fork Maintainer"
+                    "role": "developer"
                 }
             ],
             "description": "PHP WebDriver for Selenium 2",
@@ -2545,12 +2545,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "1062dbbe87d000108e9e0512deb8be127fe5de1e"
+                "reference": "4cf4b3b1347de46cf5c52faae2fd6997c320c7db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/1062dbbe87d000108e9e0512deb8be127fe5de1e",
-                "reference": "1062dbbe87d000108e9e0512deb8be127fe5de1e",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/4cf4b3b1347de46cf5c52faae2fd6997c320c7db",
+                "reference": "4cf4b3b1347de46cf5c52faae2fd6997c320c7db",
                 "shasum": ""
             },
             "require": {
@@ -2610,7 +2610,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2014-04-30 23:01:32"
+            "time": "2014-05-01 06:33:52"
         },
         {
             "name": "symfony/browser-kit",
@@ -2989,9 +2989,9 @@
         "michelf/php-markdown": 20,
         "squizlabs/php_codesniffer": 20
     },
-    "platform": [
-
-    ],
+    "platform": {
+        "php": ">=5.4.0"
+    },
     "platform-dev": [
 
     ]
