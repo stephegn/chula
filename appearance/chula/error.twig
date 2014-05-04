@@ -1,5 +1,8 @@
 {% extends "base.twig" %}
 {% block title %}Error{% endblock %}
 {% block content %}
-    <div id="theContent">{{ message }}</div>
+    <div class="jumbotron">
+        <h1>Oops! Something went wrong</h1>
+        <p>{{ message }}</p>
+    </div>
 {% endblock %}

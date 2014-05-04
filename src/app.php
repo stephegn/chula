@@ -5,11 +5,14 @@ require_once __DIR__ . '/bootstrap.php';
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-foreach ($app['config']['location'] as $path) {
-    if (!is_dir($path)) {
-        $app->abort(500, "There was an issue loading the content. Is your content location correct?");
+$app->before(function () use ($app) {
+    foreach ($app['config']['location'] as $path) {
+        if (!is_dir($path)) {
+            throw new \Exception("There was an issue loading the content. Is your content location correct?");
+        }
     }
-}
+});
+
 
 $app->mount('/', new Chula\ControllerProvider\HomePage());
 
@@ -57,7 +60,6 @@ $app->get(
     }
 );
 
-//@todo make these editable in the template
 $app->error(function (\Exception $e, $code) use ($app) {
     switch ($code) {
         case 404:
