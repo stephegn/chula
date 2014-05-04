@@ -7,8 +7,7 @@ Small blogging/website framework.
 Task list: https://trello.com/b/EcvhEDaC/chula
 
 ##Installation
-1. Checkout this repo
-2. Composer install
+1. Run `composer create-project chula/chula chula 1.0.0-alpha`
 3. Add content/draft and content/pages folders in the project root
 4. You're done!
 
