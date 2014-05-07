@@ -6,10 +6,8 @@ Small blogging/website framework.
 
 Task list: https://trello.com/b/EcvhEDaC/chula
 
-##Installation
-1. Run `composer create-project chula/chula chula 1.0.0-alpha`
-3. Add content/draft and content/pages folders in the project root
-4. You're done!
+##[Installation](https://github.com/stephcook22/chula/wiki/Installation)
+
 
 ##Templating
 A very basic example of a template set has been included. To make your own template simply copy this folder
@@ -56,7 +54,6 @@ You are passed in the `{{message}}` which you can display if you like.
 ##Tests
 Tests have been setup in the tests/ directory using Codeception.
 ###Coverage
-wget https://raw.github.com/Codeception/c3/master/c3.php
-
-vendor/codeception/codeception/codecept run --coverage --xml --html
+`wget https://raw.github.com/Codeception/c3/master/c3.php`
+`vendor/codeception/codeception/codecept run --coverage --xml --html`
 
