@@ -1,5 +1,20 @@
 {
+    "name": "chula/chula",
+    "description": "A lightweight blogging framework based on markdown",
+    "keywords": ["blog","cms"],
+    "type" : "project",
+    "homepage": "http://stephcook22.github.io/chula",
+    "authors": [
+        {
+            "name": "Steph Cook",
+            "homepage": "http://stephcook.co.uk"
+        },
+        {
+            "name": "Qas Ashraf"
+        }
+    ],
     "require": {
+        "php": ">=5.4.0",
         "silex/silex": "1.*",
         "filp/whoops": "1.*",
         "symfony/form": "~2.3",
@@ -9,14 +24,26 @@
         "symfony/translation": "~2.3",
         "igorw/config-service-provider": "1.2.*@dev",
         "michelf/php-markdown": "1.3.*@dev",
-        "symfony/security": "~2.3"
+        "symfony/security": "~2.3",
+        "twig/extensions": "1.0.0"
+
     },
     "require-dev": {
         "codeception/codeception": "*",
         "codeception/phpbuiltinserver": "*",
+        "pdepend/pdepend":                      "1.1.*",
+        "phploc/phploc":                        "2.0.*",
+        "phpmd/phpmd":                          "@dev",
+        "phpunit/phpunit":                      "3.7.*",
+        "sebastian/phpcpd":                     "2.0.*",
         "squizlabs/php_codesniffer": "2.0.*@dev"
     },
     "autoload": {
-        "psr-0": {"": "src/"}
+        "psr-4": {
+            "Chula\\": "src/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
     }
 }

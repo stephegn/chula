@@ -1,14 +1,14 @@
 {% extends "base.twig" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-    <div id="theContent">
-        List of all the posts
-        <table class="table table-striped">
-            {% for page in pages %}
-                <tr>
-                    <td><a href="{{ page.getSlug() }}">{{ page.getSlug() }}</a></td>
-                </tr>
-            {% endfor %}
-        </table>
+    <div id="theContent" class="list-group">
+        {% for page in pages %}
+            <a class="list-group-item" href="{{ page.slug }}">
+                <div>
+                    {{ page.time|date }}
+                    {{ page.content|truncate(150)|raw }}
+                </div>
+            </a>
+        {% endfor %}
     </div>
 {% endblock %}
