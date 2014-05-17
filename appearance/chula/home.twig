@@ -3,10 +3,10 @@
 {% block content %}
     <div id="theContent" class="list-group">
         {% for page in pages %}
-            <a class="list-group-item" href="{{ page.slug }}">
+            <a class="list-group-item" href="{{ page.getSlug() }}">
                 <div>
-                    {{ page.time|date }}
-                    {{ page.content|truncate(150)|raw }}
+                    {{ page.getTime()|date }}
+                    {{ page.getContent()|truncate(150)|raw }}
                 </div>
             </a>
         {% endfor %}
