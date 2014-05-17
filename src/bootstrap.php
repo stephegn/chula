@@ -66,14 +66,14 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
 
 //Twig sandbox policy
 //@todo some of these can be removed with proper methods in place
-$tags       = array('if', 'for', 'block');
+$tags       = array('if', 'for', 'block', 'include');
 $filters    = array('upper', 'raw', 'escape', 'truncate', 'date');
 $methods    = array(
-  'Page'                                     => array('getTitle', 'getBody'),
+  'Chula\Model\Page' => array('getTitle', 'getBody', 'getSlug', 'getContent', 'getHtmlContent'),
   'Symfony\Component\HttpFoundation\Request' => array('getbaseurl')
 );
 $properties = array(
-  'Page' => array('title', 'body'),
+  'Page' => array('title', 'body', 'slug'),
 );
 $functions  = array('range');
 $policy     = new Twig_Sandbox_SecurityPolicy($tags, $filters, $methods, $properties, $functions);
