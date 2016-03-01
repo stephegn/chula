@@ -10,3 +10,4 @@ c3.php
 c3tmp/
 appearance/*
 !appearance/chula
+bin
