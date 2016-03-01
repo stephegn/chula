@@ -4,32 +4,27 @@ language: php
 # list any PHP version you want to test against
 php:
   # using major version aliases
-
-  # aliased to a recent 5.4.x version
-  - 5.4
-  # aliased to a recent 5.5.x version
   - 5.5
+  - 5.6
+  - 7.0
 
 # whitelist which branches to run on
 branches:
   only:
     - master
-    - Refactor
 
 
 # execute any number of scripts before the test run, custom env's are available as variables
 before_script:
- - wget http://codeception.com/codecept.phar
  - composer self-update
  - composer install
  - mkdir -p tests/_log
  - mkdir -p content/drafts content/pages
  - php -S localhost:8000 -t web/ > /dev/null 2>&1 &
  - sudo chmod -R 777 content
- - php codecept.phar build
- - wget https://raw.github.com/Codeception/c3/master/c3.php
+ - ./bin/codecept build
 
-script: php codecept.phar run --coverage # run codeception tests!
+script: ./bin/codecept run # run codeception tests!
 
 # configure notifications (email, IRC, campfire etc)
 notifications:

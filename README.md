@@ -13,9 +13,17 @@ Task list: https://trello.com/b/EcvhEDaC/chula
 
 ##[Templating](https://github.com/stephcook22/chula/wiki/Templating)
 
+## Build
+ * `composer install`
+ * `mkdir -p content/drafts content/pages`
+ * `php -S localhost:8000 -t web`
+
 ##Tests
 Tests have been setup in the tests/ directory using Codeception.
+ * `./bin/codecept build` (`bin\codecept.bat build`)
+ * `mkdir -p tests/_log`
+ * ``./bin/codecept(.bat) run` (`bin\codecept.bat run`)
+
 ###Coverage
-`wget https://raw.github.com/Codeception/c3/master/c3.php`
-`vendor/codeception/codeception/codecept run --coverage --xml --html`
+ * `./bin/codecept run --coverage --xml --html`
 
